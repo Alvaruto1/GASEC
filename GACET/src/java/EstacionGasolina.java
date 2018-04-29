@@ -68,4 +68,22 @@ public class EstacionGasolina {
         return null;
     }
 
+    /**
+     * @param comentario 
+     * @return
+     */
+    public void agregarComentario(Comentario comentario) {
+        // TODO implement here
+        return null;
+    }
+
+    /**
+     * @param comentario 
+     * @return
+     */
+    public void eliminarComentario(Comentario comentario) {
+        // TODO implement here
+        return null;
+    }
+
 }

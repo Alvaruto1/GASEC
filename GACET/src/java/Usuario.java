@@ -42,18 +42,6 @@ public class Usuario {
      */
     public ArrayList<Vehiculo> vehiculo;
 
-    /**
-     * 
-     */
-    public Ubicacion ubicacion;
-
-    /**
-     * 
-     */
-    public int id;
-
-
-
 
     /**
      * @return
@@ -93,26 +81,6 @@ public class Usuario {
     public boolean cambiarContrasenia(contraseniaVieja String, void String. contraseniaNueva) {
         // TODO implement here
         return false;
-    }
-
-    /**
-     * @param comentario 
-     * @param estacion 
-     * @return
-     */
-    public void agregarComentario(Comentario comentario, EstacionGasolina estacion) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param comentario 
-     * @param estacion 
-     * @return
-     */
-    public void eliminarComentario(Comentario comentario, EstacionGasolina estacion) {
-        // TODO implement here
-        return null;
     }
 
 }

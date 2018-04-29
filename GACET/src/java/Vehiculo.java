@@ -62,6 +62,12 @@ public class Vehiculo {
      */
     public Consulta consulta;
 
+    /**
+     * 
+     */
+    public Ubicacion; ubicacion;
+
+
 
 
 

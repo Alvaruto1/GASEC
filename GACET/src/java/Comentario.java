@@ -15,7 +15,7 @@ public class Comentario {
     /**
      * 
      */
-    public Usuario usuario;
+    public int idUsuario;
 
     /**
      * 
@@ -26,12 +26,6 @@ public class Comentario {
      * 
      */
     public String mensaje;
-
-    /**
-     * 
-     */
-    public int id;
-
 
 
     /**
