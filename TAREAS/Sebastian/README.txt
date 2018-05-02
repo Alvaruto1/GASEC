@@ -1,0 +1,2 @@
+https://www.youtube.com/watch?v=wojRZzru49o&list=PL4qycS8CTHjux7HuhpGxLR3h0bGD3zomH&index=4  -------> Para cambiar el icono de un lugar y ponerle informacion al objeto.
+https://www.youtube.com/watch?v=vneGdGlFuS0&list=PL4qycS8CTHjux7HuhpGxLR3h0bGD3zomH&index=3  -------> Mapa dinamico
