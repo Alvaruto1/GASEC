@@ -28,7 +28,7 @@ public class SOAT {
     /**
      * 
      */
-    public date fecha;
+    private GregorianCalendar fecha;
 
     /**
      * 
@@ -55,6 +55,14 @@ public class SOAT {
      */
     public static int CARGA = 2;
 
+    public GregorianCalendar getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(GregorianCalendar fecha) {
+        this.fecha = fecha;
+    }
+
     /**
      * 
      */
@@ -72,5 +80,7 @@ public class SOAT {
     public void calcularPrecio(Vehiculo vehiculo) {
         // TODO implement here
     }
+    
+    
 
 }

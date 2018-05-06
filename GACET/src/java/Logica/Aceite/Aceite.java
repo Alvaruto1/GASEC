@@ -26,6 +26,11 @@ public class Aceite {
      * informacion sobre el aceite
      */
     private String caracteristica;
+    
+    /**
+     * kilometros para cambio de aceite
+     */
+    private int kmCambioAceite;
 
     /**
      * obtener tipo de aceite
@@ -74,6 +79,24 @@ public class Aceite {
     public void setCaracteristica(String caracteristica) {
         this.caracteristica = caracteristica;
     }
+
+    /**
+     * obtener kilometros para hacer el cambio de aceite
+     * @return kilometros para cambio
+     */
+    public int getKmCambioAceite() {
+        return kmCambioAceite;
+    }
+
+    /**
+     * colocar km cambio de aceite
+     * @param kmCambioAceite 
+     */
+    public void setKmCambioAceite(int kmCambioAceite) {
+        this.kmCambioAceite = kmCambioAceite;
+    }
+    
+    
     
     
 

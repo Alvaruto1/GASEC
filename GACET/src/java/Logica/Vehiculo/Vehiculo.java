@@ -30,7 +30,7 @@ public abstract class Vehiculo {
     /**
      * fecha del ultimo mantenimiento del vehiculo
      */
-    private Date fechaUltimoMantenimiento;
+    private GregorianCalendar fechaUltimoMantenimiento;
 
     /**
      * lista de combustibles del vehiculo
@@ -120,7 +120,7 @@ public abstract class Vehiculo {
      * obtener ultima fecha de mantenimiento
      * @return un date de la fecha
      */
-    public Date getFechaUltimoMantenimiento() {
+    public GregorianCalendar getFechaUltimoMantenimiento() {
         return fechaUltimoMantenimiento;
     }
 
@@ -128,7 +128,7 @@ public abstract class Vehiculo {
      * colocar ultima fecha de matenimiento
      * @param fechaUltimoMantenimiento 
      */
-    public void setFechaUltimoMantenimiento(Date fechaUltimoMantenimiento) {
+    public void setFechaUltimoMantenimiento(GregorianCalendar fechaUltimoMantenimiento) {
         this.fechaUltimoMantenimiento = fechaUltimoMantenimiento;
     }
 
