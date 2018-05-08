@@ -1,7 +1,6 @@
 package Logica.Comentario;
 
 
-import Logica.Usuario.Usuario;
 import java.util.*;
 
 /**
@@ -15,23 +14,23 @@ public class Comentario {
     /**
      * identificador del usuario activo
      */
-    public int idUsuario;
+    private int idUsuario;
 
     /**
      * valoración hecha por el usuario para la estación de gasolina
      */
-    public int calificacion;
+    private int calificacion;
 
     /**
      * Texto para dar una opinión extendida sobre la apreciación de la 
      * estación
      */
-    public String mensaje;
+    private String mensaje;
     
     /**
      * fecha del envío del comentario
      */
-    public GregorianCalendar fecha;
+    private GregorianCalendar fecha;
 
     //Métodos
     
@@ -48,7 +47,8 @@ public class Comentario {
      * @param calificacion valoración hacia la estación de servicio
      * @param mensaje opinión complementaria a la valoración
      */
-    public void hacerComentario(int idUsuario, int calificacion, String mensaje) {
+    public void hacerComentario(int idUsuario, int calificacion, 
+            String mensaje) {
         
         this.idUsuario = idUsuario;
         this.calificacion = calificacion;

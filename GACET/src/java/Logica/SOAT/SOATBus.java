@@ -1,10 +1,5 @@
 package Logica.SOAT;
 
-
-import static Logica.SOAT.SOAT.PUBLICO;
-import Logica.Vehiculo.Vehiculo;
-import java.util.*;
-
 /**
  * Clase en donde se trabajará especificamente el SOAT del Bus
  */
@@ -21,13 +16,15 @@ public class SOATBus extends SOAT {
     /**
      * Método para calcular el precio del SOAT de los buses
      */
-    public void calcularPrecio(Vehiculo vehiculo){
+    public void calcularPrecio(String tipo, int cilindraje){
         
-        if(vehiculo.getTipo().equalsIgnoreCase("bus") && tipoDeServicio==PUBLICO){
-            this.precio = salarioMinimo*22.72;
+        if(tipo.equalsIgnoreCase("bus") && 
+                getTipoDeServicio()==getPUBLICO()){
+            setPrecio(getSalarioMinimo()*22.72);
         }
-        else if(vehiculo.getTipo().equalsIgnoreCase("bus") && tipoDeServicio==PARTICULAR){
-            this.precio = salarioMinimo*18.28;
+        else if(tipo.equalsIgnoreCase("bus") &&
+                getTipoDeServicio()==getPARTICULAR()){
+            setPrecio(getSalarioMinimo()*18.28);
         }
         
     }

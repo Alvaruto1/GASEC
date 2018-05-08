@@ -1,9 +1,5 @@
 package Logica.SOAT;
 
-
-import Logica.Vehiculo.Vehiculo;
-import java.util.*;
-
 /**
  * Clase en donde se trabajará especificamente el SOAT de la Moto
  */
@@ -20,17 +16,17 @@ public class SOATMoto extends SOAT {
     /**
      * Método para calcular el precio del SOAT de las motos
      */
-    public void calcularPrecio(Vehiculo vehiculo){
+    public void calcularPrecio(String tipo, int cilindraje){
         
-        if(vehiculo.getTipo().equalsIgnoreCase("moto") && vehiculo.getCilindraje()<100){
-            this.precio = salarioMinimo*8.60;
+        if(tipo.equalsIgnoreCase("moto") && cilindraje<100){
+            setPrecio(getSalarioMinimo()*8.60);
         }
-        else if(vehiculo.getTipo().equalsIgnoreCase("moto") && 
-                vehiculo.getCilindraje()>100 && vehiculo.getCilindraje()<200){
-            this.precio = salarioMinimo*11.55;
+        else if(tipo.equalsIgnoreCase("moto") && 
+                cilindraje>100 && cilindraje<200){
+            setPrecio(getSalarioMinimo()*11.55);
         }
-        else if(vehiculo.getTipo().equalsIgnoreCase("moto") && vehiculo.getCilindraje()>200){
-            this.precio = salarioMinimo*13.03;
+        else if(tipo.equalsIgnoreCase("moto") && cilindraje>200){
+            setPrecio(getSalarioMinimo()*13.03);
         }
         
     }

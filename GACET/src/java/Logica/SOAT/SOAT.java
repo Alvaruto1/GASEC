@@ -1,7 +1,5 @@
 package Logica.SOAT;
 
-
-import Logica.Vehiculo.Vehiculo;
 import java.util.*;
 
 /**
@@ -14,63 +12,63 @@ public abstract class SOAT {
     /**
      * Empresa proveedora de los servicios del SOAT
      */
-    public String empresa;
+    private String empresa;
 
     /**
      * Valor en pesos del SOAT
      */
-    public double precio;
+    private double precio;
 
     /**
      * fecha actual 
      */
-    public GregorianCalendar fecha;
+    private GregorianCalendar fecha;
 
     /**
      * ciudad en donde se sacará el SOAT
      */
-    public String ciudad;
+    private String ciudad;
 
     /**
      * tipo de servicio a que se destinó el vehículo (público, particular,
      * carga,etc)
      */
-    public int tipoDeServicio;
+    private int tipoDeServicio;
     
     /**
      * Tipo de servicio público
      */
-    public static int PUBLICO = 0;
+    private static final int PUBLICO = 0;
 
     /**
      * Tipo de servicio particular
      */
-    public static int PARTICULAR = 1;
+    private static final int PARTICULAR = 1;
 
     /**
      * Servicio de carga
      */
-    public static int CARGA = 2;
+    private static final int CARGA = 2;
 
     /**
      * Servicio diplomático
      */
-    public static int DIPLOMATICO = 3;
+    private static final int DIPLOMATICO = 3;
     
     /**
      * Servicio de remolque
      */
-    public static int REMOLQUE = 4;
+    private static final int REMOLQUE = 4;
     
     /**
      * identificador del usuario activo
      */
-    public int id ;
+    private int id ;
     
     /**
      * Salario mínimo legal diario vigente
      */
-    public double salarioMinimo;
+    private double salarioMinimo;
 
     //Métodos
     
@@ -84,9 +82,10 @@ public abstract class SOAT {
      * Método en donde se hará el cálculo del precio a pagar por cada clase de
      * vehículo por el SOAT del mismo
      * 
-     * @param vehiculo vehículo al cual se le calculará el SOAT
+     * @param tipo tipo de vehículo en uso
+     * @param cilindraje cilidraje del vehículo para el cálculo del SOAT
      */
-    public abstract void calcularPrecio(Vehiculo vehiculo);
+    public abstract void calcularPrecio(String tipo, int cilindraje);
         
     
     /**

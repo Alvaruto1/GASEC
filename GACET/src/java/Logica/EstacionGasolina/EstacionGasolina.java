@@ -14,37 +14,37 @@ public class EstacionGasolina {
     /**
      * Ubicación de la estación de gasolina (coordenadas)
      */
-    public Ubicacion direccion;
+    private Ubicacion direccion;
 
     /**
      * Arreglo de los combustibles que maneja la estación de gasolina
      */
-    public ArrayList<Combustible> combustile;
+    private ArrayList<Combustible> combustile;
 
     /**
      * Marca de la estación de gasolina
      */
-    public String marca;
+    private String marca;
 
     /**
      * Número de puestos que tiene la estación de gasolina seleccionada
      */
-    public int puestos;
+    private int puestos;
 
     /**
      * arreglo con los comentarios
      */
-    public ArrayList<Comentario> comentario;
+    private ArrayList<Comentario> comentario;
 
     /**
      * Valoración que tiene la estación
      */
-    public int valoracion;
+    private int valoracion;
 
     /**
      * identificador del usuario activo
      */
-    public int id;
+    private int id;
 
     //Métodos
     /**

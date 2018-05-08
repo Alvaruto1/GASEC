@@ -1,28 +1,26 @@
 package Logica.EstacionGasolina;
 
 
-import java.util.*;
-
 /**
  * Clase en donde se manejará el combustible correspondiente a cada vehículo
  */
-public class Combustible {
+public abstract class Combustible {
 
     //Atributos
     /**
      * tipo de combustible que utiliza el vehículo
      */
-    public String tipo;
+    private String tipo;
 
     /**
      * Precio del combustible por galón y en pesos.
      */
-    public Double precio;
+    private double precio;
 
     /**
      * Detalles del combustible como su composición y rendimiento
      */
-    public String caracteristica;
+    private String caracteristica;
     
     //Métodos
     /**
@@ -31,6 +29,12 @@ public class Combustible {
     public Combustible() {
         
     }
+    
+    /**
+     * Metodo para asignar precio por defecto al combustible
+     * @param precio precio por defecto del combustible
+     */
+    public abstract void precioCombustible(double precio);
     
     /**
      * obtiene el tipo de combustible
