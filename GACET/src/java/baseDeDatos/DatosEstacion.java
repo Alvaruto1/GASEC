@@ -25,7 +25,7 @@ public class DatosEstacion {
     public void IngresarEstacion(EstacionGasolina g ,int id_Combustible ,int id_Ubicacion){
         
         try {
-            PreparedStatement insertar = c.getConexion().prepareStatement("insert into Estacion("
+            PreparedStatement insertar = c.getConexion().prepareStatement("insert into estacion("
                     + "Marca,"
                     + "Puestos,"
                     + "Valoracion,"

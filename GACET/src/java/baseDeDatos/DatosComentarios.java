@@ -24,7 +24,7 @@ public class DatosComentarios {
     public void IngresarComentario(Comentario co,int id_Estacion){
         
         try {
-            PreparedStatement insertar = c.getConexion().prepareStatement("insert into Comentario("
+            PreparedStatement insertar = c.getConexion().prepareStatement("insert into comentario("
                     + "id_Usuario,"
                     + "id_Estacion,"
                     + "Comentario,"

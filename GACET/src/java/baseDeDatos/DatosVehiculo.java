@@ -28,7 +28,7 @@ public class DatosVehiculo {
     public void IngresarVehiculo(int id_usuario, int id_soat,int id_Aceite, int id_Ubicacion ,Vehiculo v){
         
         try {
-            PreparedStatement insertar = c.getConexion().prepareStatement("insert into Vehiculo("
+            PreparedStatement insertar = c.getConexion().prepareStatement("insert into vehiculo("
                     + "id_Usuario,"
                     + "Placa,"
                     + "id_TipoVehiculo,"

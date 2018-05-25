@@ -24,7 +24,7 @@ public class DatosUbicacion {
     public void IngresarUbicacion(Ubicacion u){
         
         try {
-            PreparedStatement insertar = c.getConexion().prepareStatement("insert into Ubicacion("
+            PreparedStatement insertar = c.getConexion().prepareStatement("insert into ubicacion("
                     + "Longitud,"
                     + "Latitud) values(?,?)");
             

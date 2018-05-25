@@ -25,7 +25,7 @@ public class DatosUsuario {
     public void IngresarUsuario(Usuario u){
        
         try {
-            PreparedStatement insertar = c.getConexion().prepareStatement("insert into Usuario("
+            PreparedStatement insertar = c.getConexion().prepareStatement("insert into usuario("
                     + "Nombre,"
                     + "Alias,"
                     + "Edad,"

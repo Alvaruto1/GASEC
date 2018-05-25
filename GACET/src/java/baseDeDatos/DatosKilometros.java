@@ -22,7 +22,7 @@ public class DatosKilometros {
     public void IngresarUbicacion(int id_Vehiculo){
         
         try {
-            PreparedStatement insertar = c.getConexion().prepareStatement("insert into Kilometros("
+            PreparedStatement insertar = c.getConexion().prepareStatement("insert into kilometros("
                     + "id_Vehiculo) values(?)");
            
             insertar.setDouble(1, id_Vehiculo);
