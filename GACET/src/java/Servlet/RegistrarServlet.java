@@ -5,6 +5,8 @@
  */
 package Servlet;
 
+import Logica.Usuario.Usuario;
+import baseDeDatos.DatosUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -30,18 +32,36 @@ public class RegistrarServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        Usuario usuario = new Usuario();
+        usuario.setNombre(request.getParameter("nombre"));
+        usuario.setAlias(request.getParameter("alias"));
+        usuario.setEdad(Integer.parseInt(request.getParameter("edad")));
+        usuario.setEmail(request.getParameter("correo"));
+        usuario.setContrasenia(request.getParameter("contrasenia"));    
+        
+        DatosUsuario datosUsuario = new DatosUsuario("gacet", "root", "root");
+        
+        datosUsuario.IngresarUsuario(usuario);
+        
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RegistrarServlet</title>");            
+            out.println("<title>Registro</title>");   
+            //tiempo de demorar en la pagina
+            out.println("<meta http-equiv=\"Refresh\" content=\"2;url="+"gacet.jsp"+"\">");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RegistrarServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>"+"Registro exitoso, por favor inicie sesion"+"</h1>");
             out.println("</body>");
-            out.println("</html>");
+            out.println("</html>"); 
         }
+        
+        request.getSession().setAttribute("nombre", usuario.getAlias());
+        response.sendRedirect("iniciarSesion.jsp");
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

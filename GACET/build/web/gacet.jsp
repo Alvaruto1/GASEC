@@ -4,10 +4,16 @@
     Author     : alvar
 --%>
 
+<%@page import="Logica.Usuario.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            Usuario usuario= new Usuario();
+            int id= Integer.parseInt(request.getSession().getAttribute("id").toString());
+            usuario = (Usuario) request.getSession().getAttribute("usuario");
+        %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
         <title>GACET</title>
@@ -25,7 +31,7 @@
                     <ul>
                         <li><a href="#somos">¿Quienes somos?</a></li>                        
                         <li><a href="">PlacaVehiculo Actual</a></li>
-                        <li><a href="modificarCuenta.jsp">Nombre Usuario</a></li>
+                        <li><a href="modificarCuenta.jsp"><%=usuario.getAlias()%></a></li>
                         <li><a href="">Cerrar Sesion</a></li>
                     </ul>
 

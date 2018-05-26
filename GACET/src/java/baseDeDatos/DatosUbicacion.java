@@ -45,7 +45,7 @@ public class DatosUbicacion {
     public void borrarUbicacion(int id) {
 
         try {
-            PreparedStatement pstm = c.getConexion().prepareStatement("delete from Ubicacion "
+            PreparedStatement pstm = c.getConexion().prepareStatement("delete from ubicacion "
                     + " where id_Ubicacion = ?");
 
             pstm.setInt(1, id);

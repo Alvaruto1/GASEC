@@ -21,7 +21,9 @@ public class DatosUsuario {
     public DatosUsuario(String nombreBase , String login , String pasword) {
         c = new Conexion(nombreBase, login, pasword);
         
-    }
+    }    
+   
+    
     public void IngresarUsuario(Usuario u){
        
         try {
@@ -30,7 +32,7 @@ public class DatosUsuario {
                     + "Alias,"
                     + "Edad,"
                     + "Email,"
-                    + "Contraseña) values(?,?,?,?,?,?)");
+                    + "Contrasenia) values(?,?,?,?,?)");
             
             insertar.setString(1, u.getNombre());
             insertar.setString(2, u.getAlias());
@@ -54,14 +56,14 @@ public class DatosUsuario {
         try {
             
             
-            PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id, "
+            PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id_Usuario, "
                     + "Nombre,"
                     + "Alias,"
                     + "Edad,"
                     + "Email,"
-                    + "Contraseña"
-                    + "FROM Usuario "
-                    + "ORDER BY id");
+                    + "Contrasenia "
+                    + "FROM usuario "
+                    + "ORDER BY id_Usuario");
             
             
             tabla = pstm.executeQuery();
@@ -69,16 +71,19 @@ public class DatosUsuario {
             System.out.println("Se logro mostrar la tabla Usuario");
             
         } catch (SQLException ex) {
-            System.out.println("Error: Mostrar tabla Usuario");
+            System.out.println("Error: Mostrar tabla usuario");
+            System.out.println(ex);
         }
         return tabla;
         
     }
     
+    
+    
     public void borrarUsuario(int id) {
 
         try {
-            PreparedStatement pstm = c.getConexion().prepareStatement("delete from Usuario "
+            PreparedStatement pstm = c.getConexion().prepareStatement("delete from usuario "
                     + " where id_Usuario = ?");
 
             pstm.setInt(1, id);
@@ -86,9 +91,35 @@ public class DatosUsuario {
             pstm.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("Error: No se ha logrado borrar el Usuario");
+            System.out.println("Error: No se ha logrado borrar el usuario");
         }
 
+
+    }
+    
+    public void actualizarUsuario(int id, Usuario u) {
+        
+        
+        try {            
+            PreparedStatement ps = c.getConexion().prepareStatement("update usuario set Nombre = ?, "
+                    + " Alias = ?,"
+                    + " Edad = ?,"
+                    + " Email = ?,"
+                    + " Contrasenia = ? "                    
+                    + " where id_Usuario = ?");
+            
+            ps.setString(1, u.getNombre());
+            ps.setString(2, u.getAlias());
+            ps.setInt(3, u.getEdad());
+            ps.setString(4,u.getEmail());
+            ps.setString(5,u.getContrasenia());
+            ps.setInt(6, id);
+            ps.executeUpdate();
+
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
 
     }
         

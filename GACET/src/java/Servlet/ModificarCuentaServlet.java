@@ -5,6 +5,8 @@
  */
 package Servlet;
 
+import Logica.Usuario.Usuario;
+import baseDeDatos.DatosUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -30,17 +32,27 @@ public class ModificarCuentaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        DatosUsuario datosUsuario = new DatosUsuario("gacet", "root", "root");
+        System.out.println(request.getSession().getAttribute("usuario"));
+        Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");        
+        usuario.setNombre(request.getParameter("nombre"));
+        usuario.setEmail(request.getParameter("correo"));
+        usuario.setContrasenia(request.getParameter("contrasenia"));
+        
+        datosUsuario.actualizarUsuario(Integer.parseInt(request.getSession().getAttribute("id").toString()), usuario);
+        
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ModificarCuentaServlet</title>");            
+            out.println("<title>Modificar</title>");   
+            //tiempo de demorar en la pagina
+            out.println("<meta http-equiv=\"Refresh\" content=\"2;url="+"gacet.jsp"+"\">");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ModificarCuentaServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>"+"Cambio efectuado"+"</h1>");
             out.println("</body>");
-            out.println("</html>");
+            out.println("</html>"); 
         }
     }
 

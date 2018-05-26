@@ -66,7 +66,7 @@ public class DatosEstacion {
             
             tabla = pstm.executeQuery();
             
-            System.out.println("Se logro mostrar la tabla Estacion");
+            System.out.println("Se logro mostrar la tabla estacion");
             
         } catch (SQLException ex) {
             System.out.println("Error: Mostrar tabla Estacion");
@@ -78,7 +78,7 @@ public class DatosEstacion {
     public void borrarEstacion(int id) {
 
         try {
-            PreparedStatement pstm = c.getConexion().prepareStatement("delete from Estacion "
+            PreparedStatement pstm = c.getConexion().prepareStatement("delete from estacion "
                     + " where id_Estacion = ?");
 
             pstm.setInt(1, id);
@@ -86,7 +86,7 @@ public class DatosEstacion {
             pstm.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("Error: No se ha logrado borrar la Estacion");
+            System.out.println("Error: No se ha logrado borrar la estacion");
         }
 
 

@@ -5,8 +5,15 @@
  */
 package Servlet;
 
+import Logica.Usuario.Usuario;
+import baseDeDatos.DatosUsuario;
+import baseDeDatos.DatosVehiculo;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,18 +37,81 @@ public class IniciarSesionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        String usuarioAlias = request.getParameter("usuario");
+        String contrasenia = request.getParameter("contrasenia");
+        DatosUsuario datosUsuario = new DatosUsuario("gacet","root","root"); 
+        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet","root","root");
+        ResultSet rS = datosUsuario.MostrarTabla();
+        String mensaje="";
+        String url="";
+        Usuario usuario = new Usuario();
+        
+        
+        
+        int id=0;
+        
+        // obtener tabla de usuarios
+        try {
+            while(rS.next()){
+                //comparar usaurio con base de datos
+                if(rS.getString("Alias").equals(usuarioAlias)){ 
+                    // comparar contraseña con base de datos
+                    if(rS.getString("Contrasenia").equals(contrasenia)){                       
+                        id=rS.getInt("id_Usuario");
+                        mensaje = "Usuario logueado correctamente";
+                        url="gacet.jsp";                        
+                        usuario.setAlias(rS.getString("Alias"));
+                        usuario.setNombre(rS.getString("Nombre"));
+                        usuario.setEdad(rS.getInt("Edad"));
+                        usuario.setEmail(rS.getString("Email"));
+                        usuario.setContrasenia(rS.getString("Contrasenia"));
+                        usuario.setVehiculo(datosVehiculo.vehiculosUsuarioById(id));
+                        request.getSession().setAttribute("usuario", usuario);
+                        request.getSession().setAttribute("id",id);
+                        
+                        break;
+                    }
+                    else{
+                        mensaje = "Contraseña incorrecta";  
+                        url="iniciarSesion.jsp";
+                    }                                        
+                }
+                else{
+                    mensaje = "Usuario incorrecto";
+                    url="iniciarSesion.jsp";
+                } 
+                
+            }
+        } catch (SQLException ex) {
+            mensaje= "error en el ingreso";
+            url="iniciarSesion.jps";
+        }
+        
+        
+        
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet IniciarSesionServlet</title>");            
+            out.println("<title>Iniciar Sesion</title>");   
+            //tiempo de demorar en la pagina
+            out.println("<meta http-equiv=\"Refresh\" content=\"2;url="+url+"\">");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet IniciarSesionServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>"+mensaje+"</h1>");
             out.println("</body>");
-            out.println("</html>");
+            out.println("</html>");          
+            
         }
+        
+        
+    }
+    
+    void obtenerVehiculos(){
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

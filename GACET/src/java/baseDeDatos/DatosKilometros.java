@@ -31,7 +31,7 @@ public class DatosKilometros {
             
         } catch (SQLException e) {
             
-            System.out.println("ERROR : No se logro ingresar los datos a Kilometros");
+            System.out.println("ERROR : No se logro ingresar los datos a kilometros");
         }
         
         
@@ -41,7 +41,7 @@ public class DatosKilometros {
     public void borrarKilometros(int id) {
 
         try {
-            PreparedStatement pstm = c.getConexion().prepareStatement("delete from Kilometros "
+            PreparedStatement pstm = c.getConexion().prepareStatement("delete from kilometros "
                     + " where id_Kilometros = ?");
 
             pstm.setInt(1, id);
@@ -49,7 +49,7 @@ public class DatosKilometros {
             pstm.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("Error: No se ha logrado borrar los Kilometros");
+            System.out.println("Error: No se ha logrado borrar los kilometros");
         }
 
 

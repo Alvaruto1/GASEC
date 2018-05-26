@@ -36,6 +36,8 @@ public class DatosComentarios {
             insertar.setInt(4, co.getCalificacion());
             insertar.executeUpdate();
             
+            System.out.println("Conexion correcta");
+            
             
         } catch (SQLException e) {
             
@@ -62,10 +64,10 @@ public class DatosComentarios {
             
             tabla = pstm.executeQuery();
             
-            System.out.println("Se logro mostrar la tabla Comentario");
+            System.out.println("Se logro mostrar la tabla comentario");
             
         } catch (SQLException ex) {
-            System.out.println("Error: Mostrar tabla Comentario");
+            System.out.println("Error: Mostrar tabla comentario");
         }
         return tabla;
         
@@ -74,7 +76,7 @@ public class DatosComentarios {
     public void borrarComentario(int id) {
 
         try {
-            PreparedStatement pstm = c.getConexion().prepareStatement("delete from Comentario "
+            PreparedStatement pstm = c.getConexion().prepareStatement("delete from comentario "
                     + " where id_Comentario = ?");
 
             pstm.setInt(1, id);
@@ -82,7 +84,7 @@ public class DatosComentarios {
             pstm.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("Error: No se ha logrado borrar el Comentario");
+            System.out.println("Error: No se ha logrado borrar el comentario");
         }
 
 

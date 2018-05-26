@@ -28,9 +28,10 @@
                     <div class="contForm">
                         <label for="vehiculo">Tipo vehiculo:</label>
                         <select id="vehiculo" name="vehiculo">
-                            <option value="carro">Carro</option>
-                            <option value="moto">Moto</option>
-                            <option value="bus">Camion</option>
+                            <option value="1">Carro</option>
+                            <option value="2">Moto</option>
+                            <option value="3">Camion</option>
+                            <option value="4">Bus</option>
                         </select>
                         <label for="placa">Placa:</label>
                         <input type="text" id="placa" name="placa" required pattern="[A-Z]{3}[0-9]{3}|[A-Z]{3}[0-9]{2}[A-Z]{1}" title="mayusculas ejem: LQZ94C" placeholder="Escriba la placa">

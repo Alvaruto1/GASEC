@@ -4,10 +4,20 @@
     Author     : alvar
 --%>
 
+<%@page import="org.omg.CORBA.UnionMemberHelper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            String nombre;
+            if(request.getSession().getAttribute("nombre")!=null){
+                 nombre= request.getSession().getAttribute("nombre").toString();                
+            }else{
+                nombre ="";
+            }
+            
+        %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
         <title>Inicio Sesion</title>
@@ -21,6 +31,7 @@
                 </div>
             </div>
             
+            
             <div class="contImagen">
                 <img src="img/logos/usuario.png" alt="no disponible">
             </div>
@@ -28,7 +39,7 @@
             <div class="contInicioSesion">
                 <form action="IniciarSesionServlet" method="post">
                     <label for="usuario">Usuario</label>
-                    <input type="text" id="usuario" name="usuario" required placeholder="Escriba su usuario o alias">
+                    <input type="text" id="usuario" name="usuario" required placeholder="Escriba su usuario o alias" value="<%=nombre%>">
                     <label for="contrasenia">Contraseña</label>
                     <input type="password" id="contrasenia" name="contrasenia" required placeholder="Escriba su contraseña">
                     <input type="submit" id="iniciar" name="iniciar" value="Iniciar">

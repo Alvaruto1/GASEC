@@ -23,11 +23,11 @@ import java.sql.*;
 + */
 public class Conexion {
     
-   String nombreBase;
+    String nombreBase;
     String login;
     String pasword;
     String URL;
-   String mensaje;
+    String mensaje;
     Connection conexion = null;
     
     Conexion(String nombreBase , String login , String pasword){
@@ -47,7 +47,7 @@ public class Conexion {
             
         } catch (SQLException |ClassNotFoundException e) {
             
-            mensaje = e.getMessage();
+            System.out.println("Error conexion"); 
            
         }
         
