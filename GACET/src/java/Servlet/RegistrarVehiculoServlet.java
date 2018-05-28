@@ -5,12 +5,18 @@
  */
 package Servlet;
 
-import Logica.Vehiculo.Bus;
-import Logica.Vehiculo.Camion;
-import Logica.Vehiculo.Carro;
-import Logica.Vehiculo.Moto;
+
+
+import Logica.Aceite.Aceite;
+import Logica.EstacionGasolina.*;
+import Logica.SOAT.*;
+import Logica.Vehiculo.*;
+import baseDeDatos.DatosVehiculo;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,25 +40,87 @@ public class RegistrarVehiculoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        Vehiculo vehiculo;        
+        SOAT soat;
+        Combustible combustible;
+        Aceite aceite = new Aceite();
+        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet", "root", "root");
+        
+        
+        //setear datos vehiculo
         switch(Integer.parseInt(request.getParameter("vehiculo"))){
             case 1:
-                Carro carro = new Carro();
-                
+                vehiculo = new Carro();   
+                soat= new SOATCarro();
                 
                 break;
             case 2:
-                Moto moto = new Moto();
+                vehiculo = new Moto();
+                soat= new SOATMoto();
                
                 break;
             case 3:
-                Camion camion = new Camion();
-                
+                vehiculo = new Camion();
+                soat = new SOATCamion();
                 break;
             case 4:
-                Bus bus = new Bus();
+                vehiculo = new Bus();  
+                soat = new SOATBus();
+                break;
                 
-                break;            
-        }
+            default:
+                vehiculo = new Bus(); 
+                soat = new SOATBus();
+        }        
+        vehiculo.setPlaca(request.getParameter("placa"));
+        String fecha = request.getParameter("fecha");        
+        vehiculo.setFechaUltimoMantenimiento(desglosarFecha(fecha));        
+        vehiculo.setCilindraje(Integer.parseInt(request.getParameter("cilindraje")));
+        
+        //setear datos soat
+        String fechaS = request.getParameter("fechaS");
+        soat.setFecha(desglosarFecha(fechaS));        
+        soat.setEmpresa(request.getParameter("empresa"));        
+        soat.setCiudad(request.getParameter("ciudad"));        
+        soat.setTipoDeServicio(Integer.parseInt(request.getParameter("tipoServicio")));
+        
+        
+        
+        //setear dato combustible
+        switch(Integer.parseInt(request.getParameter("tipoCombustible"))){
+            case 1:
+                combustible = new ACPM();
+                break;
+            case 2:
+                combustible = new Gasolina();
+                break;
+            case 3:
+                combustible = new Gas();
+                break;
+                
+            default:
+                combustible = new Gas();
+                break;
+        }        
+        vehiculo.agregarCombustible(combustible);
+        
+        // setear datos aceite
+        aceite.setMarca(request.getParameter("marca"));       
+        aceite.setTipo(vehiculo.getTipo());       
+        aceite.setKmCambioAceite(Integer.parseInt(request.getParameter("kmMaximoAceite")));   
+        aceite.setCaracteristica(request.getParameter("referenciaAceite"));
+        vehiculo.setAceite(aceite);
+        
+        
+        //terminar
+        //datosVehiculo.IngresarVehiculo(0, 0, 0,vehiculo);
+        
+        
+        
+        
+        
+        
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -65,6 +133,17 @@ public class RegistrarVehiculoServlet extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
         }
+    }
+    
+    public GregorianCalendar desglosarFecha(String fecha){
+        
+        int anio = Integer.parseInt(fecha.substring(0,4));
+        int mes = Integer.parseInt(fecha.substring(5,7));
+        int dia = Integer.parseInt(fecha.substring(8));
+        
+        GregorianCalendar fechaMante = new GregorianCalendar(anio, mes, dia);
+        
+        return fechaMante;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

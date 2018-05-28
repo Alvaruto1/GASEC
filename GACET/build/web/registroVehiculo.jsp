@@ -49,7 +49,7 @@
                     </div>      
                     <div class="contForm">    
                         <label for="fecha">Fecha de SOAT:</label>
-                        <input type="date" id="fecha" name="fecha" required>
+                        <input type="date" id="fechaS" name="fechaS" required>
                         <label for="empresa">Empresa:</label>                        
                         <input type="text" id="empresa" name="empresa" required pattern="[A-Z]{4-16}" placeholder="Escriba la empresa de SOAT">
                         <label for="ciudad">Ciudad:</label>                        
@@ -63,10 +63,10 @@
                         <input name="ciudad" id="ciudad" list="ciudades" required placeholder="Escoja la ciudad">
                         <label for="tipoServicio">Tipo servicio:</label>
                         <select id="tipoServicio" name="tipoServicio">
-                            <option value="particular">Particular</option>
-                            <option value="publico">Publico</option>
-                            <option value="carga">Carga</option>
-                            <option value="diplomatico">Diplomatico</option>
+                            <option value="1">Particular</option>
+                            <option value="0">Publico</option>
+                            <option value="2">Carga</option>
+                            <option value="3">Diplomatico</option>
                         </select>
                     </div>    
                 </div>
@@ -80,9 +80,9 @@
                             
                             <label for="tipoCombustible">Tipo combustible:</label>
                             <select id="tipoCombustible" name="tipoCombustible">
-                                <option value="ACPM">ACPM</option>
-                                <option value="gasolina">Gasolina</option>
-                                <option value="gas">Gas</option>
+                                <option value="1">ACPM</option>
+                                <option value="2">Gasolina</option>
+                                <option value="3">Gas</option>
                             </select>                            
                             
                         </div>
@@ -91,15 +91,16 @@
                             <h1 class="titulo">Aceite</h1>
                         </div> 
                         <div class="contForm"> 
-                            <label for="tipoAceite">Tipo aceite:</label>
-                            <select id="tipoAceite" name="tipoAceite">
-                                <option value="carro">Carro</option>
-                                <option value="moto">Moto</option>
-                                <option value="bus">Bus</option>
-                                <option value="camion">Camion</option>
-                            </select>                             
+                            <label for="marca">Marca aceite:</label>
+                                                       
                             <label for="marca">Marca:</label>                        
                             <input type="text" id="marca" name="marca" required pattern="[A-Za-z0-9]{2-16}" placeholder="Escriba la marca">
+                            
+                            <label for="kmMaximoAceite">Kilometraje maximo cambio aceite:</label>                        
+                            <input type="number" id="kmMaximoAceite" name="kmMaximoAceite" required pattern="[0-9]{2-16}" placeholder="Escriba los kilometros">
+                            
+                            <label for="referenciaAceite">Referencia Aceite</label>
+                            <textarea id="referenciaAceite" name="referenciaAceite"></textarea> 
                             
                         </div>
                         

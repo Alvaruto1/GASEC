@@ -21,4 +21,10 @@ public class ACPM extends Combustible {
         
     }
 
+    @Override
+    public void tipoDefecto() {
+        setTipo("ACPM");
+    }
+
+
 }

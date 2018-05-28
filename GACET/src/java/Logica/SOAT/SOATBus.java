@@ -18,12 +18,13 @@ public class SOATBus extends SOAT {
      */
     public void calcularPrecio(String tipo, int cilindraje){
         
+        
         if(tipo.equalsIgnoreCase("bus") && 
-                getTipoDeServicio()==getPUBLICO()){
+                getTipoDeServicio()==PUBLICO){
             setPrecio(getSalarioMinimo()*22.72);
         }
         else if(tipo.equalsIgnoreCase("bus") &&
-                getTipoDeServicio()==getPARTICULAR()){
+                getTipoDeServicio()==PARTICULAR){
             setPrecio(getSalarioMinimo()*18.28);
         }
         

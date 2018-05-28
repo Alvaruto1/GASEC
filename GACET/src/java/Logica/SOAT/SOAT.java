@@ -38,37 +38,29 @@ public abstract class SOAT {
     /**
      * Tipo de servicio público
      */
-    private static final int PUBLICO = 0;
+    public static final int PUBLICO = 0;
 
     /**
      * Tipo de servicio particular
      */
-    private static final int PARTICULAR = 1;
+    public static final int PARTICULAR = 1;
 
     /**
      * Servicio de carga
      */
-    private static final int CARGA = 2;
+    public static final int CARGA = 2;
 
     /**
      * Servicio diplomático
      */
-    private static final int DIPLOMATICO = 3;
+    public static final int DIPLOMATICO = 3;
     
-    /**
-     * Servicio de remolque
-     */
-    private static final int REMOLQUE = 4;
     
-    /**
-     * identificador del usuario activo
-     */
-    private int id ;
     
     /**
      * Salario mínimo legal diario vigente
      */
-    private double salarioMinimo;
+    private double salarioMinimo = 26041.40;
 
     //Métodos
     
@@ -166,62 +158,6 @@ public abstract class SOAT {
      */
     public void setTipoDeServicio(int tipoDeServicio) {
         this.tipoDeServicio = tipoDeServicio;
-    }
-
-    /**
-     * Obtener servicio público
-     * @return público
-     */
-    public static int getPUBLICO() {
-        return PUBLICO;
-    }
-
-    /**
-     * Obtener servicio particular
-     * @return particulat
-     */
-    public static int getPARTICULAR() {
-        return PARTICULAR;
-    }
-
-    /**
-     * Obtener servicio de carga
-     * @return carga
-     */
-    public static int getCARGA() {
-        return CARGA;
-    }
-
-    /**
-     * Obtener servicio diplomático
-     * @return diplomático
-     */
-    public static int getDIPLOMATICO() {
-        return DIPLOMATICO;
-    }
-
-    /**
-     * Obtener servicio remolque
-     * @return remolque
-     */
-    public static int getREMOLQUE() {
-        return REMOLQUE;
-    }
-
-    /**
-     * Obtener la id del usuario
-     * @return id usuario
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Modificar id usuario
-     * @param id 
-     */
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**

@@ -1,0 +1,144 @@
+
+.contPrincipal{
+
+	text-align:center;
+	align-content: center;
+	width: 350px;
+	height: 800px;
+	padding: 10px;
+	margin: 20px;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display:flex;
+	flex-direction: column;
+	justify-content: center; 
+	align-items: center;
+	border-radius: 59px 22px 22px 22px;
+	-moz-border-radius: 59px 22px 22px 22px;
+	-webkit-border-radius: 59px 22px 22px 22px;
+	border: 7px solid #21618C;
+	-webkit-box-shadow: -8px 6px 6px 1px rgba(184,164,184,1);
+	-moz-box-shadow: -8px 6px 6px 1px rgba(184,164,184,1);
+	box-shadow: -8px 6px 6px 1px rgba(184,164,184,1);
+
+}
+body{
+
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display:flex;
+	flex-direction: column;
+	justify-content: center; 
+	align-items: center;
+	color:#21618C;
+}
+
+
+.tituloGACET{
+	
+    font-size: 30px;
+	margin:10px;
+	padding: 5px;
+	text-align: center; 
+	
+}
+.logoGACET{
+
+
+
+	margin:10px;
+	padding: 5px;
+	text-align: center; 
+
+
+	
+}
+
+
+.contInicioSesion{
+
+
+
+	margin:10px;
+	padding: 5px;
+	text-align: center; 
+
+
+	
+}
+.contImagen{
+
+	border: 7px solid #21618C;
+	margin:10px;
+	padding: 5px;
+	text-align: center;
+	
+}
+.contInicioSesion  label , input{
+
+	margin:10px;
+	padding: 5px;
+	display: block;
+
+}
+
+
+input[type = "submit"]{
+	width: 90%;
+	padding: 10px;
+    background: #21618C;
+    color:white;
+    margin: 12px;
+    box-shadow: #bfbfc7 2px 2px 4px;
+
+}
+
+
+input[type = "submit"]:hover{
+
+    background: #bfbfc7;
+    color:black;
+    cursor: pointer;
+    border:0;
+}
+a{
+	color:#21618C;
+}
+
+.container{
+
+	width: 500px;
+	height: 700px;
+	padding: 10px;
+	margin: 20px;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display:flex;
+
+	flex-direction: column;
+	justify-content: center; 
+	align-items: center;
+	border-radius: 59px 22px 22px 22px;
+	-moz-border-radius: 59px 22px 22px 22px;
+	-webkit-border-radius: 59px 22px 22px 22px;
+	border: 7px solid #21618C;
+	-webkit-box-shadow: -8px 6px 6px 1px rgba(184,164,184,1);
+	-moz-box-shadow: -8px 6px 6px 1px rgba(184,164,184,1);
+	box-shadow: -8px 6px 6px 1px rgba(184,164,184,1);
+
+}
+body{
+
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display:flex;
+	flex-direction: column;
+	justify-content: center; 
+	align-items: center;
+	color:#21618C;
+}
+
+.row{
+	padding: 5px;
+	margin: 10px;
+}

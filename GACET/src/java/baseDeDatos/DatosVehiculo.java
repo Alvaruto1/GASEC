@@ -27,7 +27,7 @@ public class DatosVehiculo {
         c = new Conexion(nombreBase, login, pasword);
         
     }
-    public void IngresarVehiculo(int id_usuario, int id_soat,int id_Aceite, int id_Ubicacion ,Vehiculo v){
+    public void IngresarVehiculo(int id_usuario, int id_soat,int id_Aceite,Vehiculo v){
         
         try {
             PreparedStatement insertar = c.getConexion().prepareStatement("insert into vehiculo("
@@ -37,8 +37,7 @@ public class DatosVehiculo {
                     + "id_Soat,"
                     + "Mantenimiento,"
                     + "Cilindraje,"
-                    + "Aceite,"
-                    + "id_ubicacion) values(?,?,?,?,?,?,?,?,?)");
+                    + "Aceite) values(?,?,?,?,?,?,?)");
             
             insertar.setInt(1, id_usuario);
             insertar.setString(2, v.getPlaca());
@@ -47,7 +46,6 @@ public class DatosVehiculo {
             insertar.setString(5, String.valueOf(v.getFechaUltimoMantenimiento()));
             insertar.setInt(6, v.getCilindraje());
             insertar.setInt(7, id_Aceite);
-            insertar.setInt(8, id_Ubicacion);
             insertar.executeUpdate();
             
             System.out.println("se logro ingresar datos a vehiculo");

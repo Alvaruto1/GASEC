@@ -43,14 +43,14 @@ public class RegistrarServlet extends HttpServlet {
         DatosUsuario datosUsuario = new DatosUsuario("gacet", "root", "root");
         
         datosUsuario.IngresarUsuario(usuario);
-        
+        request.getSession().setAttribute("nombre", usuario.getAlias());
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Registro</title>");   
             //tiempo de demorar en la pagina
-            out.println("<meta http-equiv=\"Refresh\" content=\"2;url="+"gacet.jsp"+"\">");
+            out.println("<meta http-equiv=\"Refresh\" content=\"2;url="+"iniciarSesion.jsp"+"\">");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>"+"Registro exitoso, por favor inicie sesion"+"</h1>");
@@ -58,7 +58,7 @@ public class RegistrarServlet extends HttpServlet {
             out.println("</html>"); 
         }
         
-        request.getSession().setAttribute("nombre", usuario.getAlias());
+        
         response.sendRedirect("iniciarSesion.jsp");
         
         

@@ -45,6 +45,11 @@ public abstract class Combustible {
     }
     
     /**
+     * colocar valor por defecto al tipo de combustible
+     */
+    public abstract void tipoDefecto();
+    
+    /**
      * modifica el tipo de combustible
      * @param tipo 
      */

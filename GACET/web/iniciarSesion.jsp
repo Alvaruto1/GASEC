@@ -20,6 +20,7 @@
         %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/css.css">
         <title>Inicio Sesion</title>
     </head>
     <body>
@@ -27,13 +28,13 @@
             <div class="contLogo">
                 <div class="tituloGACET">GACET</div>
                 <div class="logoGACET">
-                    <img src="img/logos/logo.png" alt="no disponible">
+                    <img src="img/Logo.jpeg" alt="no disponible">
                 </div>
             </div>
             
             
             <div class="contImagen">
-                <img src="img/logos/usuario.png" alt="no disponible">
+                <img src="img/Usuario.jpg" alt="no disponible">
             </div>
             
             <div class="contInicioSesion">

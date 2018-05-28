@@ -20,4 +20,9 @@ public class Gas extends Combustible {
         
     }
 
+    @Override
+    public void tipoDefecto() {
+        setTipo("Gas");
+    }
+
 }
