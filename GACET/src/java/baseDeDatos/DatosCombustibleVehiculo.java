@@ -18,18 +18,16 @@ public class DatosCombustibleVehiculo {
     
     }
     
-    public void ingresarCombustibleVehiculo(Combustible co, int id_Vehiculo){
+    public void ingresarCombustibleVehiculo(Combustible co){
         
         try {
             PreparedStatement insertar = c.getConexion().prepareStatement("insert into combustiblev("
                     + " Tipo, "
-                    + " Caracteristica, "
-                    + " id_Vehiculo) "
-                    + " values(?,?,?)");
+                    + " Caracteristica) "
+                    + " values(?,?)");
             
             insertar.setString(1, co.getTipo());
-            insertar.setString(2, co.getCaracteristica());
-            insertar.setInt(3, id_Vehiculo);
+            insertar.setString(2, co.getCaracteristica());     
             
             
             insertar.executeUpdate();
@@ -47,8 +45,7 @@ public class DatosCombustibleVehiculo {
     public ResultSet mostrarCombustibleVehiculo(int id) throws SQLException {
         PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id_CombustibleV, "
                  + " Tipo, "
-                 + " Caracteristica, "
-                 + " id_Vehiculo) "
+                 + " Caracteristica) "
                  + " FROM combustiblev "
                  + " WHERE id_CombustibleV = ? ");
         pstm.setInt(1, id);
@@ -62,17 +59,15 @@ public class DatosCombustibleVehiculo {
     }
 
     
-    public void actualizarCombustibleVehiculo(Combustible co, int id_Vehiculo) {
+    public void actualizarCombustibleVehiculo(Combustible co) {
 
         try {
             PreparedStatement pstm = c.getConexion().prepareStatement("update combustiblev set Tipo = ?, "
                     + " Caracteristica = ?,"
-                    + " id_Vehiculo = ?,"
                     + " where id_CombustibleV = ?");
             
             pstm.setString(1, co.getTipo());
             pstm.setString(2, co.getCaracteristica());
-            pstm.setInt(3, id_Vehiculo);
 
             pstm.executeUpdate();
 

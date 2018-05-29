@@ -10,7 +10,13 @@ package Servlet;
 import Logica.Aceite.Aceite;
 import Logica.EstacionGasolina.*;
 import Logica.SOAT.*;
+import Logica.Ubicacion.Ubicacion;
+import Logica.Usuario.Usuario;
 import Logica.Vehiculo.*;
+import baseDeDatos.DatosAceite;
+import baseDeDatos.DatosCombustibleVehiculo;
+import baseDeDatos.DatosSoat;
+import baseDeDatos.DatosUbicacion;
 import baseDeDatos.DatosVehiculo;
 
 import java.io.IOException;
@@ -40,11 +46,17 @@ public class RegistrarVehiculoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");
+        int idUsuario = Integer.parseInt(request.getSession().getAttribute("id").toString());
         Vehiculo vehiculo;        
         SOAT soat;
         Combustible combustible;
         Aceite aceite = new Aceite();
         DatosVehiculo datosVehiculo = new DatosVehiculo("gacet", "root", "root");
+        DatosSoat datosSoat = new DatosSoat("gacet", "root", "root");
+        DatosAceite datosAceite = new DatosAceite("gacet", "root", "root");
+        DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "root");
+        
         
         
         //setear datos vehiculo
@@ -84,36 +96,52 @@ public class RegistrarVehiculoServlet extends HttpServlet {
         soat.setCiudad(request.getParameter("ciudad"));        
         soat.setTipoDeServicio(Integer.parseInt(request.getParameter("tipoServicio")));
         
+        datosSoat.ingresarSOAT(soat);
+        int idSoat = datosSoat.getIdRegistroActual();
         
         
+        int id_combustible=0;
         //setear dato combustible
         switch(Integer.parseInt(request.getParameter("tipoCombustible"))){
             case 1:
                 combustible = new ACPM();
+                id_combustible = 1;
                 break;
             case 2:
                 combustible = new Gasolina();
+                id_combustible = 2;
                 break;
             case 3:
                 combustible = new Gas();
+                id_combustible = 3;
                 break;
                 
             default:
                 combustible = new Gas();
                 break;
-        }        
-        vehiculo.agregarCombustible(combustible);
+        } 
+        
+        vehiculo.agregarCombustible(combustible);  
+        
         
         // setear datos aceite
         aceite.setMarca(request.getParameter("marca"));       
         aceite.setTipo(vehiculo.getTipo());       
         aceite.setKmCambioAceite(Integer.parseInt(request.getParameter("kmMaximoAceite")));   
         aceite.setCaracteristica(request.getParameter("referenciaAceite"));
+        
+        datosAceite.ingresarAceite(aceite);
+        int idAceite = datosAceite.getIdRegistroActual();
         vehiculo.setAceite(aceite);
+        Ubicacion ubicacion = new Ubicacion();
+        ubicacion.setDireccion("no registrada");
+        ubicacion.setLatitud(0);
+        ubicacion.setLongitud(0);
+        datosUbicacion.IngresarUbicacion(ubicacion);
+        int idUbicacion = datosUbicacion.getIdRegistroActual();
+        datosVehiculo.IngresarVehiculo(idUsuario,idSoat, idAceite, idUbicacion, id_combustible, vehiculo);
         
-        
-        //terminar
-        //datosVehiculo.IngresarVehiculo(0, 0, 0,vehiculo);
+        usuario.agregarVehiculo(vehiculo);
         
         
         

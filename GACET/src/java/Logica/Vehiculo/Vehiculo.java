@@ -13,6 +13,11 @@ import java.util.*;
 public abstract class Vehiculo {   
 
     /**
+     * id asociado a la base de datos
+     */
+    private int id;
+    
+    /**
      * identificiacion del vehiculo
      */
     private String placa;
@@ -62,7 +67,21 @@ public abstract class Vehiculo {
      */
     private Ubicacion ubicacion;
     
-    
+    /**
+     * obtener id de vehiculo
+     * @return numero de id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * colocar id de vehiculo
+     * @param id 
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
     /**
      * obtener placa del vehiculo
      * @return texto de la placa

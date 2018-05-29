@@ -60,6 +60,7 @@ public final class configuaracionVehiculo_jsp extends org.apache.jasper.runtime.
       out.write("\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
       out.write("        <meta name=\"viewport\" content=\"width=device-width, user-scalable=no,initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0\">\n");
+      out.write("        <script type=\"text/javascript\" src=\"js/jquery.min.js\"></script>\n");
       out.write("        <title>Configuracion vehiculos</title>\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
@@ -74,10 +75,10 @@ public final class configuaracionVehiculo_jsp extends org.apache.jasper.runtime.
       out.write("                    ");
 for(int i=0; i< vehiculos.size(); i++){
                         if(i==0){
-                            out.println("<option value="+(i+1)+" selected=true>"+vehiculos.get(i).getPlaca()+"</option>");                            
+                            out.println("<option value="+(i)+" selected=true>"+vehiculos.get(i).getPlaca()+"</option>");                            
                         }
                         else{
-                            out.println("<option value="+(i+1)+">"+vehiculos.get(i).getPlaca()+"</option>");                            
+                            out.println("<option value="+(i)+">"+vehiculos.get(i).getPlaca()+"</option>");                            
                         }
                         
                     }
@@ -89,25 +90,39 @@ for(int i=0; i< vehiculos.size(); i++){
       out.write("                    \n");
       out.write("            <div>Caracteristicas Vehiculo:</div>\n");
       out.write("            \n");
-      out.write("            <div><h2>Combustible</h2> ");
+      out.write("            <div><h2>Combustible</h2> <h2 id=\"combustible\">");
       out.print(vehiculos.get(0).getCombustible().get(0).getTipo());
-      out.write("</div>\n");
+      out.write("</h2></div>\n");
       out.write("            <div>\n");
-      out.write("                <h2>Aceite: </h2> ");
+      out.write("                <h2>Aceite: </h2> <h2 id=\"aceite\">");
       out.print(vehiculos.get(0).getAceite().getMarca());
-      out.write("\n");
-      out.write("                <h2>Caracteristica: </h2> ");
+      out.write("</h2>\n");
+      out.write("                <h2>Caracteristica: </h2> <h2 id=\"caracteristica\">");
       out.print(vehiculos.get(0).getAceite().getCaracteristica());
-      out.write("\n");
+      out.write("</h2>\n");
       out.write("            </div> \n");
       out.write("            \n");
       out.write("            <div>\n");
-      out.write("                <a href=\"\">Agregar un nuevo vehiculo</a>\n");
-      out.write("                <a href=\"\">Adicionar</a>\n");
-      out.write("                <a href=\"\">Eliminar vehiculo seleccionado</a>\n");
+      out.write("                <form action=\"ConfiguracionVehiculoServlet\" method=\"post\">\n");
+      out.write("                    <input type=\"hidden\" value=\"0\" name=\"opcion\">\n");
+      out.write("                    <input type=\"hidden\" value=\"0\" name=\"idVehiculo\" id=\"idVehiculo\">\n");
+      out.write("                    <input type=\"submit\" value=\"Agregar vehiculo\">\n");
+      out.write("                </form>\n");
+      out.write("                <form action=\"ConfiguracionVehiculoServlet\" method=\"post\">\n");
+      out.write("                    <input type=\"hidden\" value=\"1\" name=\"opcion\">\n");
+      out.write("                    <input type=\"hidden\" value=\"0\" name=\"idVehiculo\" id=\"idVehiculo\">\n");
+      out.write("                    <input type=\"submit\" value=\"Editar vehiculo\">\n");
+      out.write("                </form>\n");
+      out.write("                <form action=\"ConfiguracionVehiculoServlet\" method=\"post\">\n");
+      out.write("                    <input type=\"hidden\" value=\"2\" name=\"opcion\">\n");
+      out.write("                    <input type=\"hidden\" value=\"0\" name=\"idVehiculo\" id=\"idVehiculo\">\n");
+      out.write("                    <input type=\"submit\" value=\"Eliminar vehiculo\">\n");
+      out.write("                </form>\n");
       out.write("            </div>\n");
       out.write("            \n");
       out.write("        </div>\n");
+      out.write("            <script type=\"text/javascript\" src=\"js/configuracionVehiculo.js\"></script>\n");
+      out.write("            \n");
       out.write("    </body>\n");
       out.write("</html>\n");
     } catch (Throwable t) {

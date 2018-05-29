@@ -6,6 +6,7 @@
 package Servlet;
 
 import Logica.Usuario.Usuario;
+import baseDeDatos.DatosVehiculo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -34,6 +35,8 @@ public class ConfiguracionVehiculoServlet extends HttpServlet {
         int caso = Integer.parseInt(request.getParameter("opcion"));
         int idVehiculo = Integer.parseInt(request.getParameter("idVehiculo"));
         Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");
+        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet", "root", "root");
+        
         
         switch(caso){
             // agregar vehiculo
@@ -47,10 +50,9 @@ public class ConfiguracionVehiculoServlet extends HttpServlet {
                 break;
             // eliminar vehiculo
             case 3:
-                usuario.getVehiculo().remove(idVehiculo); 
-                // falta obtenetr  id vehiculo sql 
-                break;
-                                
+                usuario.getVehiculo().remove(idVehiculo);
+                datosVehiculo.borrarVehiculo(usuario.getVehiculo().get(idVehiculo).getId());                 
+                break;        
                 
         }
         

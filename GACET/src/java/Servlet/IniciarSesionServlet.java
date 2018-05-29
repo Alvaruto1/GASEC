@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +64,9 @@ public class IniciarSesionServlet extends HttpServlet {
                         usuario.setEdad(rS.getInt("Edad"));
                         usuario.setEmail(rS.getString("Email"));
                         usuario.setContrasenia(rS.getString("Contrasenia"));
-                        usuario.setVehiculo(datosVehiculo.vehiculosUsuarioById(id));
+                        if(datosVehiculo.vehiculosUsuarioById(id)!=null){
+                            usuario.setVehiculo(datosVehiculo.vehiculosUsuarioById(id));                            
+                        }                        
                         request.getSession().setAttribute("usuario", usuario);
                         request.getSession().setAttribute("id",id);
                         

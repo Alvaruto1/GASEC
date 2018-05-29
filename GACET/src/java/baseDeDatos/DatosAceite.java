@@ -1,6 +1,10 @@
 package baseDeDatos;
 
 import Logica.Aceite.Aceite;
+import Logica.SOAT.SOATBus;
+import Logica.SOAT.SOATCamion;
+import Logica.SOAT.SOATCarro;
+import Logica.SOAT.SOATMoto;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +15,9 @@ import java.sql.SQLException;
  */
 public class DatosAceite {
     
-     Conexion c;
+    private int idRegistroActual;
+     
+    Conexion c;
 
     public DatosAceite(String nombreBase , String login , String pasword) {
         c = new Conexion(nombreBase, login, pasword); 
@@ -34,7 +40,7 @@ public class DatosAceite {
             
             
             insertar.executeUpdate();
-            
+            this.idRegistroActual=idUltimoRegistrosAceite();
             System.out.println("Se guardaron los datos correctamente");
             
         } catch (SQLException e) {
@@ -44,8 +50,32 @@ public class DatosAceite {
         
         
     }
+
+    public int getIdRegistroActual() {
+        return idRegistroActual;
+    }
     
-    public ResultSet mostrarAceite(int id) throws SQLException {
+    
+    /**
+     * devuelve el id del ultimo registro 
+     * @return entero
+     * @throws SQLException 
+     */
+    public int idUltimoRegistrosAceite() throws SQLException{
+        int ultimo=0;
+        
+        PreparedStatement pstm =c.getConexion().prepareStatement("SELECT MAX(id_Aceite) FROM aceite");        
+        ResultSet rS = pstm.executeQuery();
+        while(rS.next()){
+            ultimo = rS.getInt("id_Aceite");
+        }
+        
+        return ultimo;
+        
+    }
+    
+    public Aceite mostrarAceite(int id) throws SQLException {
+        Aceite aceite = new Aceite();
         PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id_Aceite, "
                  + " TipoAceite, "
                  + " Marca, "
@@ -55,12 +85,16 @@ public class DatosAceite {
                  + " WHERE id_Aceite = ? ");
         pstm.setInt(1, id);
 
-        ResultSet res = pstm.executeQuery();
-        /*
-         res.close();	
-         */
+        ResultSet rS = pstm.executeQuery();
+        
+        while(rS.next()){
+            aceite.setCaracteristica(rS.getString("Caracteristica"));
+            aceite.setKmCambioAceite(rS.getInt("KmMaximo"));
+            aceite.setMarca(rS.getString("Marca"));
+            aceite.setTipo(rS.getString("TipoAceite"));
+        }
 
-        return res;
+        return aceite;
     }
 
     
