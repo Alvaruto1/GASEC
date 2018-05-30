@@ -4,7 +4,9 @@
     Author     : Sebas
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="baseDeDatos.DatosEstacion"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="baseDeDatos.DatosUbicacion"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,7 +21,7 @@
       height:500px;
       width: 100%;
       }
-  </style>
+      </style>
   
 
 </head>
@@ -37,24 +39,57 @@
  
       data-zoom="14" role="map" class="gmaps">
 
+          
+          <%   
+              int id;
+              DatosUbicacion datosUbicacion = new DatosUbicacion("gacet","root","Hola12345"); 
+              DatosEstacion datosEstacion = new DatosEstacion("gacet","root","Hola12345");
+              ResultSet rS = datosUbicacion.MostrarTabla();
+              
+              while(rS.next()){
+                  
+              id= rS.getInt("id_Ubicacion");
+              
+              ResultSet datos = datosEstacion.sacarEstacion(id);
+              
+              
+          %>
+      
+          
+          <div
+          data-id="1"
+          data-lat="<%= rS.getDouble("Latitud")%>"
+          data-lng="<%= rS.getDouble("Longitud")%>"
+          class="marker">
+          <div class="map-card">
+          <p>Address: <%= rS.getString("Direccion")%></p>
+          
+          <% 
+           while(datos.next()){
+          
+          %>
+            <p> Marca:<%= datos.getString("Marca")%> </p>
+            <p> Puestos:<%= datos.getInt("Puestos")%></p>
+            <p> Valoracion:<%= datos.getInt("Valoracion")%></p>
+
+            </div>
+            </div>
+          <%
+              }
+          %>
+
+        
+
+          <%
+              }
+          %>
+
+      
+
  
       <!-- items de ubicaciones -->
 
-          <div
-          data-id="1"
-          data-lat="-20.363"
-          data-lng="111.044"
-          class="marker">
-          <div class="map-card">
-          <h1>This is my title 1</h1>
-          <p>Address: Fake street, #445, Stgo.</p>
-          <p>Phone: +56753223344</p>
-          <p>e-Mail: fake1@email.com</p>
-          </div>
-          </div>
-           
           
- 
       </div>
 
     </form>
@@ -64,7 +99,6 @@
       $('.gmaps').gmaps();
       });
     </script>
-    https://www.youtube.com/watch?v=fG-6QaQJ8vs
 
     
     
