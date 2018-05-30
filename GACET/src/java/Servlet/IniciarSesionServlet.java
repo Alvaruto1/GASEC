@@ -42,6 +42,7 @@ public class IniciarSesionServlet extends HttpServlet {
         DatosUsuario datosUsuario = new DatosUsuario("gacet","root","root"); 
         DatosVehiculo datosVehiculo = new DatosVehiculo("gacet","root","root");
         ResultSet rS = datosUsuario.MostrarTabla();
+        Vehiculo vehiculoActual=null;
         String mensaje="";
         String url="";
         Usuario usuario = new Usuario();
@@ -67,14 +68,14 @@ public class IniciarSesionServlet extends HttpServlet {
                         usuario.setContrasenia(rS.getString("Contrasenia"));
                         if(datosVehiculo.vehiculosUsuarioById(id)!=null){
                             usuario.setVehiculo(datosVehiculo.vehiculosUsuarioById(id));  
-                            for(Vehiculo v: usuario.getVehiculo()){
-                                v.getPlaca();
-                            }
-                            System.out.println("entra si ono");
+//                            for(Vehiculo v: usuario.getVehiculo()){
+//                                v.getPlaca();
+//                            }
+                            vehiculoActual=usuario.getVehiculo().get(0);
                         }                        
                         request.getSession().setAttribute("usuario", usuario);
                         request.getSession().setAttribute("id",id);
-                        
+                        request.getSession().setAttribute("vehiculoActual", vehiculoActual);                        
                         break;
                     }
                     else{
