@@ -32,11 +32,12 @@ public class DatosCombustibleVehiculo {
             
             insertar.executeUpdate();
             
-            System.out.println("Se guardaron los datos correctamente");
+            System.out.println("Se guardaro el combustibleV correctamente");
             
         } catch (SQLException e) {
             
-            System.out.println("ERROR");
+            System.out.println("ERROR:Ingresar datos a combustibleV");
+            System.out.println("combustibleV:"+e);
         }
         
         

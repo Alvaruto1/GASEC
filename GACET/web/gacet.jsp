@@ -11,12 +11,17 @@
     <head>
         <%
             Usuario usuario= new Usuario();
+           
             int id= 0;
             if(request.getSession().getAttribute("id")!=null){
                 id=Integer.parseInt(request.getSession().getAttribute("id").toString());
             }
             if(request.getSession().getAttribute("usuario")!=null){
-                usuario = (Usuario) request.getSession().getAttribute("usuario");                
+                usuario = (Usuario) request.getSession().getAttribute("usuario");  
+                
+            }
+            else{
+                response.sendRedirect("iniciarSesion.jsp");
             }
             
         %>
@@ -36,7 +41,19 @@
                         <div class="logo"><h2>Gacet</h2></div>
                         <nav class="menu">
                             <a href="#somos">¿Quienes somos?</a>                      
-                            <a href="#">Placa vehiculo actual</a>
+                                    <a href="#">
+                                        <form action="GACETServlet" method="post">
+                                            <input type="hidden" value="5" id="caso" name="caso">
+                                            <input type="submit" value="<%
+                                                if(usuario.getVehiculo().size()>0){
+                                                    out.println(usuario.getVehiculo().get(0).getPlaca());
+                                                }
+                                                else{
+                                                    out.println("Ingresar Vehiculo");
+                                                }                                                
+                                            %>">                                
+                                        </form>
+                                    </a>
                             <a href="modificarCuenta.jsp"> <%=usuario.getAlias()%> </a>
                             <a href="#">Cerrar Sesion</a>
                         </nav>
@@ -59,7 +76,18 @@
 
             <div class="col-xs">
 
-                <div class="contenido"> <img src="mapa.jpg"></div>  
+                <div class="contenido"> 
+                    <%
+                        if(request.getSession().getAttribute("contenido")!=null){
+                            out.print(request.getSession().getAttribute("contenido"));
+                        }
+                        else{
+                            out.print("<img src='mapa.jpg'>");
+                        }
+                        
+                        
+                    %> 
+                </div>  
 
             </div>
 
@@ -70,7 +98,7 @@
                     <div>
                     </br>
                         <form action="GACETServlet">
-                            <input type="hidden" value="0"> 
+                            <input type="hidden" value="0" id="caso" name="caso"> 
                             <input type="submit" value="Mostrar Ubicacion" class="btnContenido">
                         </form>
                     </br>    
@@ -82,7 +110,7 @@
                     
                     <div>
                         <form action="GACETServlet">
-                            <input type="hidden" value="1"> 
+                            <input type="hidden" value="1" id="caso" name="caso"> 
                             <input type="submit" value="Consultas" class="btnContenido">
                         </form>
                     </br>    
@@ -122,7 +150,7 @@
             </div> 
             <div class="col-xs">
                 <form action="GACETServlet">
-                    <input type="hidden" value="2"> 
+                    <input type="hidden" value="2" id="caso" name="caso"> 
                     <input type="submit" value="Iniciar" class="btnContenido">
                 </form>
             </div>
@@ -131,7 +159,7 @@
             </div>
             <div class="col-xs">
                 <form action="GACETServlet">
-                    <input type="hidden" value="3"> 
+                    <input type="hidden" value="3" id="caso" name="caso"> 
                     <input type="submit" value="Detenerse" class="btnContenido">
                 </form>
             </div>
@@ -140,7 +168,7 @@
             </div>
             <div class="col-xs" >
                 <form action="GACETServlet">
-                    <input type="hidden" value="4"> 
+                    <input type="hidden" value="4" id="caso" name="caso"> 
                     <input type="submit" value="Reiniciar" class="btnContenido">
                 </form>
             </div>
@@ -165,6 +193,6 @@
             </div>  
         </div> 
        </div>
-        
+      <script type="text/javascript" src="js/configuracionVehiculo.js"></script>  
     </body>
 </html>

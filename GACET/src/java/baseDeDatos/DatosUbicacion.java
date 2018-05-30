@@ -28,17 +28,21 @@ public class DatosUbicacion {
         try {
             PreparedStatement insertar = c.getConexion().prepareStatement("insert into ubicacion("
                     + "Longitud,"
-                    + "Latitud) values(?,?)");
+                    + "Latitud,"
+                    + "Direccion) values(?,?,?)");
             
             insertar.setDouble(1, u.getLatitud());
             insertar.setDouble(2, u.getLongitud());
+            insertar.setString(3, u.getDireccion());
             insertar.executeUpdate();
             
             this.idRegistroActual=idUltimoRegistrosAceite();
+            System.out.println("Se guardo ubicacion correctamente");
             
         } catch (SQLException e) {
             
-            System.out.println("ERROR : No se logro ingresar los datos a Ubicacion");
+            System.out.println("ERROR:Ingresar datos a ubicacion");
+            System.out.println("ubicacion:"+e);
         }
         
         
@@ -57,10 +61,10 @@ public class DatosUbicacion {
     public int idUltimoRegistrosAceite() throws SQLException{
         int ultimo=0;
         
-        PreparedStatement pstm =c.getConexion().prepareStatement("SELECT MAX(id_Aceite) FROM aceite");        
+        PreparedStatement pstm =c.getConexion().prepareStatement("SELECT * FROM ubicacion");        
         ResultSet rS = pstm.executeQuery();
         while(rS.next()){
-            ultimo = rS.getInt("id_Aceite");
+            ultimo = rS.getInt("id_Ubicacion");            
         }
         
         return ultimo;
@@ -89,7 +93,7 @@ public class DatosUbicacion {
         PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id_Ubicacion, "
                  + " Latitud, "
                  + " Longitud, "
-                 + " Direccion) "
+                 + " Direccion "
                  + " FROM ubicacion "
                  + " WHERE id_Ubicacion = ? ");
         pstm.setInt(1, id);

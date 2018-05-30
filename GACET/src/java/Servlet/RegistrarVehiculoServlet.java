@@ -14,14 +14,12 @@ import Logica.Ubicacion.Ubicacion;
 import Logica.Usuario.Usuario;
 import Logica.Vehiculo.*;
 import baseDeDatos.DatosAceite;
-import baseDeDatos.DatosCombustibleVehiculo;
 import baseDeDatos.DatosSoat;
 import baseDeDatos.DatosUbicacion;
 import baseDeDatos.DatosVehiculo;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -98,6 +96,7 @@ public class RegistrarVehiculoServlet extends HttpServlet {
         
         datosSoat.ingresarSOAT(soat);
         int idSoat = datosSoat.getIdRegistroActual();
+        System.out.println(idSoat+" idSoat");
         
         
         int id_combustible=0;
@@ -132,6 +131,7 @@ public class RegistrarVehiculoServlet extends HttpServlet {
         
         datosAceite.ingresarAceite(aceite);
         int idAceite = datosAceite.getIdRegistroActual();
+        System.out.println(idAceite+" idAceite");
         vehiculo.setAceite(aceite);
         Ubicacion ubicacion = new Ubicacion();
         ubicacion.setDireccion("no registrada");
@@ -139,6 +139,7 @@ public class RegistrarVehiculoServlet extends HttpServlet {
         ubicacion.setLongitud(0);
         datosUbicacion.IngresarUbicacion(ubicacion);
         int idUbicacion = datosUbicacion.getIdRegistroActual();
+        System.out.println(idUbicacion+" idUbicacion");
         datosVehiculo.IngresarVehiculo(idUsuario,idSoat, idAceite, idUbicacion, id_combustible, vehiculo);
         
         usuario.agregarVehiculo(vehiculo);
@@ -154,12 +155,14 @@ public class RegistrarVehiculoServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RegistrarVehiculo</title>");            
+            out.println("<title>Registro Vehiuclo</title>");   
+            //tiempo de demorar en la pagina
+            out.println("<meta http-equiv=\"Refresh\" content=\"2;url="+"gacet.jsp"+"\">");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RegistrarVehiculoServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>"+"Vehiculo con placas "+vehiculo.getPlaca()+" registrado correctamente</h1>");
             out.println("</body>");
-            out.println("</html>");
+            out.println("</html>"); 
         }
     }
     

@@ -38,11 +38,12 @@ public class DatosEstacion {
             insertar.setInt(4, id_Combustible);
             insertar.setInt(5, id_Ubicacion);
             insertar.executeUpdate();
-            
+            System.out.println("Se guardaro la estacion correctamente");
             
         } catch (SQLException e) {
             
-            System.out.println("ERROR");
+            System.out.println("ERROR:Ingresar datos a estacion");
+            System.out.println("estacion:"+e);
         }
         
         

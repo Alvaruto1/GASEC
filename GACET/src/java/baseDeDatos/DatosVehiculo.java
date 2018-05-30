@@ -6,12 +6,20 @@
 package baseDeDatos;
 
 
+import Logica.EstacionGasolina.ACPM;
+import Logica.EstacionGasolina.Combustible;
+import Logica.EstacionGasolina.Gas;
+import Logica.EstacionGasolina.Gasolina;
 import Logica.Vehiculo.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,16 +45,37 @@ public class DatosVehiculo {
                     + "Cilindraje,"
                     + "id_Aceite,"
                     + "id_Ubicacion,"                    
-                    + "id_CombustibleV) values(?,?,?,?,?,?,?,?)");
+                    + "id_CombustibleV,"
+                    + "id_TipoVehiculo) values(?,?,?,?,?,?,?,?,?)");
+            
+            // con vertir formato fecha
+            Date fecha = v.getFechaUltimoMantenimiento().getTime();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
             
             insertar.setInt(1, id_usuario);
             insertar.setString(2, v.getPlaca());
             insertar.setInt(3, id_soat);
-            insertar.setString(4, v.getFechaUltimoMantenimiento().toString());
+            insertar.setString(4,formatoFecha.format(fecha));
             insertar.setInt(5, v.getCilindraje());
             insertar.setInt(6, id_Aceite);
             insertar.setInt(7, id_Ubicacion);
             insertar.setInt(8, id_CombustibleV);
+            int idTipoVehiculo=0;
+            switch(v.getTipo()){
+                case "Moto":
+                    idTipoVehiculo=2;
+                    break;
+                case "Carro":
+                    idTipoVehiculo=1;
+                    break;
+                case "Camion":
+                    idTipoVehiculo=3;
+                    break;
+                case "Bus":
+                    idTipoVehiculo=4;
+                    break;                
+            }
+            insertar.setInt(9,idTipoVehiculo);
             insertar.executeUpdate();
             
             System.out.println("se logro ingresar datos a vehiculo");
@@ -54,6 +83,7 @@ public class DatosVehiculo {
         } catch (SQLException e) {
             
             System.out.println("ERROR:Ingresar datos a vehiculo");
+            System.out.println("vehiculo:"+e);
         }
         
         
@@ -73,7 +103,8 @@ public class DatosVehiculo {
                     + "Cilindraje,"
                     + "id_Aceite,"
                     + "id_Ubicacion,"                    
-                    + "id_CombustibleV "
+                    + "id_CombustibleV,"
+                    + "id_TipoVehiculo "
                     + "FROM Vehiculo "
                     + "ORDER BY id_Vehiculo");
             
@@ -122,7 +153,7 @@ public class DatosVehiculo {
         try {
             ResultSet rS = MostrarTabla();
             while(rS.next()){
-                if(rS.getInt("id_Usario") == idUsuario){
+                if(rS.getInt("id_Usuario") == idUsuario){
                     switch(rS.getInt("id_TipoVehiculo")){
                         case 1:
                             vehiculo = new Carro();
@@ -150,15 +181,39 @@ public class DatosVehiculo {
                     
                     // conexion tipo de vehiculo                    
                     ResultSet rSVehiculo = encontrarVehiculo(rS.getInt("id_Vehiculo"));
-                    vehiculo.setSoat(datosSoat.mostrarSOAT(rSVehiculo.getInt("id_Soat")));                    
-                    vehiculo.setAceite(datosAceite.mostrarAceite(rSVehiculo.getInt("id_Aceite")));
-                    vehiculo.setUbicacion(datosUbicacion.mostrarUbicacion(rSVehiculo.getInt("id_Ubicacion")));
+                    while(rSVehiculo.next()){
+                        vehiculo.setSoat(datosSoat.mostrarSOAT(rSVehiculo.getInt("id_Soat")));                    
+                        vehiculo.setAceite(datosAceite.mostrarAceite(rSVehiculo.getInt("id_Aceite")));
+                        vehiculo.setUbicacion(datosUbicacion.mostrarUbicacion(rSVehiculo.getInt("id_Ubicacion")));   
+                        Combustible combustible;
+                        switch(rSVehiculo.getInt("id_CombustibleV")){
+                            case 1:
+                                combustible = new ACPM();                                
+                                break;
+                            case 2:
+                                combustible = new Gasolina();
+                                break;
+                            case 3:
+                                combustible = new Gas();
+                                break;
+
+                            default:
+                                combustible = new Gas();
+                                break;
+                        }
+                        vehiculo.agregarCombustible(combustible);
+                                    
+                    }
                     
                     vehiculos.add(vehiculo);
                     
                 }
             }
+            System.out.println("se pudo encontrar vehiculos sin problema");
         } catch (SQLException ex) {
+            
+            System.out.println("error al encontrar vehiculos");
+            System.out.println("Error encontrar vehiculos: "+ex);
 
         }
         
@@ -169,31 +224,38 @@ public class DatosVehiculo {
      * encuentra un vehiuclo por el id
      * @param id
      * @return un resulset del carro
-     * @throws SQLException 
      */
-    public ResultSet encontrarVehiculo(int id) throws SQLException {
-        
-        PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id_Vehiculo, "
-                + " id_Usuario, "
-                + " Placa, "
-                + " id_Soat, "
-                + " Mantenimiento, "
-                + " Cilindraje, "
-                + " id_Aceite, "
-                + " id_Ubicacion)"
-                + " FROM vehiculo "
-                + " WHERE id_Vehiculo = ? ");
-        pstm.setInt(1, id);
+    public ResultSet encontrarVehiculo(int id) {
+        ResultSet rS = null;
+        try {
+            PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id_Vehiculo, "
+                    + " id_Usuario, "
+                    + " Placa, "
+                    + " id_Soat, "
+                    + " Mantenimiento, "
+                    + " Cilindraje, "
+                    + " id_Aceite, "
+                    + " id_CombustibleV,"
+                    + " id_Ubicacion "
+                    + " FROM vehiculo "
+                    + " WHERE id_Vehiculo = ? ");
+            pstm.setInt(1, id);
 
-        ResultSet rS = pstm.executeQuery();
+            rS = pstm.executeQuery();
+            System.out.println("se encontro vehiculo correctamente");
+
+        } catch (SQLException ex) {
+            System.out.println("Error encontrar vehiculo por id");
+            System.out.println(ex+": error encontrar vehiculo");
+        }
         return rS;
     }
     
     public GregorianCalendar desglosarFecha(String fecha){
         
-        int anio = Integer.parseInt(fecha.substring(0,4));
-        int mes = Integer.parseInt(fecha.substring(5,7));
-        int dia = Integer.parseInt(fecha.substring(8));
+        int anio = Integer.parseInt(fecha.substring(6));
+        int mes = Integer.parseInt(fecha.substring(3,5));
+        int dia = Integer.parseInt(fecha.substring(0,2));
         
         GregorianCalendar fechaMante = new GregorianCalendar(anio, mes, dia);
         

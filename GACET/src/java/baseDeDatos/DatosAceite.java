@@ -1,10 +1,6 @@
 package baseDeDatos;
 
 import Logica.Aceite.Aceite;
-import Logica.SOAT.SOATBus;
-import Logica.SOAT.SOATCamion;
-import Logica.SOAT.SOATCarro;
-import Logica.SOAT.SOATMoto;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,11 +37,12 @@ public class DatosAceite {
             
             insertar.executeUpdate();
             this.idRegistroActual=idUltimoRegistrosAceite();
-            System.out.println("Se guardaron los datos correctamente");
+            System.out.println("Se guardaro el aceite correctamente");
             
         } catch (SQLException e) {
             
-            System.out.println("ERROR");
+            System.out.println("ERROR:Ingresar datos a aceite");
+            System.out.println("aceite:"+e);
         }
         
         
@@ -64,7 +61,7 @@ public class DatosAceite {
     public int idUltimoRegistrosAceite() throws SQLException{
         int ultimo=0;
         
-        PreparedStatement pstm =c.getConexion().prepareStatement("SELECT MAX(id_Aceite) FROM aceite");        
+        PreparedStatement pstm =c.getConexion().prepareStatement("SELECT * FROM aceite");        
         ResultSet rS = pstm.executeQuery();
         while(rS.next()){
             ultimo = rS.getInt("id_Aceite");
@@ -80,7 +77,7 @@ public class DatosAceite {
                  + " TipoAceite, "
                  + " Marca, "
                  + " KmMaximo, "
-                 + " Caracteristica) "
+                 + " Caracteristica "
                  + " FROM aceite "
                  + " WHERE id_Aceite = ? ");
         pstm.setInt(1, id);

@@ -6,6 +6,7 @@
 package Servlet;
 
 import Logica.Usuario.Usuario;
+import Logica.Vehiculo.Vehiculo;
 import baseDeDatos.DatosUsuario;
 import baseDeDatos.DatosVehiculo;
 import java.io.IOException;
@@ -65,7 +66,11 @@ public class IniciarSesionServlet extends HttpServlet {
                         usuario.setEmail(rS.getString("Email"));
                         usuario.setContrasenia(rS.getString("Contrasenia"));
                         if(datosVehiculo.vehiculosUsuarioById(id)!=null){
-                            usuario.setVehiculo(datosVehiculo.vehiculosUsuarioById(id));                            
+                            usuario.setVehiculo(datosVehiculo.vehiculosUsuarioById(id));  
+                            for(Vehiculo v: usuario.getVehiculo()){
+                                v.getPlaca();
+                            }
+                            System.out.println("entra si ono");
                         }                        
                         request.getSession().setAttribute("usuario", usuario);
                         request.getSession().setAttribute("id",id);

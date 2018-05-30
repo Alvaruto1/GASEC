@@ -5,8 +5,11 @@
  */
 package Servlet;
 
+import Logica.Usuario.Usuario;
+import Logica.Vehiculo.Vehiculo;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +33,27 @@ public class GACETServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        int caso = Integer.parseInt(request.getParameter("caso"));
+        ArrayList<Vehiculo> vehiculos = ((Usuario) request.getSession().getAttribute("usuario")).getVehiculo();
+        
+        switch(caso){
+            case 0:                
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:  
+                request.getSession().getAttribute("<jsp:include page=\"configuaracionVehiculo.jsp\" />");
+
+                response.sendRedirect("gacet.jsp");                
+                break;            
+        }
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");

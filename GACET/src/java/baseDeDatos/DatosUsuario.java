@@ -41,10 +41,13 @@ public class DatosUsuario {
             insertar.setString(5, u.getContrasenia());
             insertar.executeUpdate();
             
+            System.out.println("Se guardo usuario correctamente");
+            
             
         } catch (SQLException e) {
             
-            System.out.println("ERROR");
+            System.out.println("ERROR:Ingresar datos a usuario");
+            System.out.println("usuario:"+e);
         }
         
         

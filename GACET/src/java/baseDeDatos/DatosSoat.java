@@ -4,7 +4,11 @@ import Logica.SOAT.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,22 +35,27 @@ public class DatosSoat {
                     + " Ciudad, "
                     + " Fecha, "
                     + " id_TipoServicio, "
-                    + " Precio, "
+                    + " Precio) "
                     + " values(?,?,?,?,?,?)");
-
+            
+            // con vertir formato fecha
+            Date fecha = so.getFecha().getTime();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+            
             insertar.setString(1, so.getClass().toString());
             insertar.setString(2, so.getEmpresa());
             insertar.setString(3, so.getCiudad());
-            insertar.setString(4, so.getFecha().toString());
+            insertar.setString(4, formatoFecha.format(fecha));
             insertar.setInt(5, so.getTipoDeServicio());
             insertar.setDouble(6, so.getPrecio());
             insertar.executeUpdate();
             this.idRegistroActual = idUltimoRegistrosSOAT();
-            System.out.println("Se guardaron los datos correctamente");
+            System.out.println("Se guardo soat correctamente");
 
         } catch (SQLException e) {
 
-            System.out.println("ERROR");
+            System.out.println("ERROR:Ingresar datos a soat");
+            System.out.println("soat:"+e);
         }
 
     }
@@ -69,7 +78,7 @@ public class DatosSoat {
     public int idUltimoRegistrosSOAT() throws SQLException{
         int ultimo=0;
         
-        PreparedStatement pstm =c.getConexion().prepareStatement("SELECT MAX(id_Soat) FROM soat");        
+        PreparedStatement pstm =c.getConexion().prepareStatement("SELECT * FROM soat");        
         ResultSet rS = pstm.executeQuery();
         while(rS.next()){
             ultimo = rS.getInt("id_Soat");
@@ -79,49 +88,58 @@ public class DatosSoat {
         
     }
     
-    public SOAT mostrarSOAT(int id) throws SQLException {
+    public SOAT mostrarSOAT(int id) {
         SOAT soat = null;
-        PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id_Soat, "
-                + " TipoSoat, "
-                + " Empresa, "
-                + " Ciudad, "
-                + " Fecha, "
-                + " id_TipoServicio, "
-                + " Precio) "
-                + " FROM soat "
-                + " WHERE id_Soat = ? ");
-        pstm.setInt(1, id);
-
-        ResultSet rS = pstm.executeQuery();
-        
-        while(rS.next()){
-            switch(rS.getString("TipoSoat")){
-                case "SOATMoto":
-                    soat = new SOATMoto();
-                    break;
-                case "SOATCarro":
-                    soat = new SOATCarro();
-                    break;
-                case "SOATBus":
-                    soat = new SOATBus();
-                    break;  
-                case "SOATCamion":
-                    soat = new SOATCamion();
-                    break;
-                default:
-                    soat = new SOATCamion();
-                    break;
-            }  
+        try {
             
-            soat.setCiudad(rS.getString("Ciudad"));
-            soat.setEmpresa("Empresa");
-            soat.setFecha(desglosarFecha(rS.getString("Fecha")));
-            soat.setPrecio(rS.getDouble("Precio"));
-            soat.setTipoDeServicio(rS.getInt("id_TipoServicio"));
+            PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id_Soat, "
+                    + " TipoSoat, "
+                    + " Empresa, "
+                    + " Ciudad, "
+                    + " Fecha, "
+                    + " id_TipoServicio, "
+                    + " Precio "
+                    + " FROM soat "
+                    + " WHERE id_Soat = ? ");
+            pstm.setInt(1, id);  
+            
+            ResultSet rS = pstm.executeQuery();
+            
+            while(rS.next()){
+                switch(rS.getString("TipoSoat")){
+                    case "SOATMoto":
+                        soat = new SOATMoto();
+                        break;
+                    case "SOATCarro":
+                        soat = new SOATCarro();
+                        break;
+                    case "SOATBus":
+                        soat = new SOATBus();
+                        break;
+                    case "SOATCamion":
+                        soat = new SOATCamion();
+                        break;
+                    default:
+                        soat = new SOATCamion();
+                        break;
+                }
+                
+                soat.setCiudad(rS.getString("Ciudad"));
+                soat.setEmpresa("Empresa");
+                soat.setFecha(desglosarFecha(rS.getString("Fecha")));
+                soat.setPrecio(rS.getDouble("Precio"));
+                soat.setTipoDeServicio(rS.getInt("id_TipoServicio"));
+                
+                
+            }
+            
+            System.out.println("Se mostro soat correctamente");
             
             
+        } catch (SQLException ex) {
+            System.out.println("ERROR:Mostrar soat");
+            System.out.println("soat:"+ex);
         }
-
         return soat;
     }
 
@@ -171,11 +189,12 @@ public class DatosSoat {
         return c.getMensaje();
     }
     
+    
     public GregorianCalendar desglosarFecha(String fecha){
         
-        int anio = Integer.parseInt(fecha.substring(0,4));
-        int mes = Integer.parseInt(fecha.substring(5,7));
-        int dia = Integer.parseInt(fecha.substring(8));
+        int anio = Integer.parseInt(fecha.substring(6));
+        int mes = Integer.parseInt(fecha.substring(3,5));
+        int dia = Integer.parseInt(fecha.substring(0,2));
         
         GregorianCalendar fechaMante = new GregorianCalendar(anio, mes, dia);
         
