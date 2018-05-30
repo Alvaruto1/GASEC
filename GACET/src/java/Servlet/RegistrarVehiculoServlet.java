@@ -144,7 +144,7 @@ public class RegistrarVehiculoServlet extends HttpServlet {
         
         usuario.agregarVehiculo(vehiculo);
         
-        
+        request.getSession().setAttribute("vehiculoActual",vehiculo);
         
         
         

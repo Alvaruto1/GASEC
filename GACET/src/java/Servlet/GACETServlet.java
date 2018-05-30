@@ -8,7 +8,6 @@ package Servlet;
 import Logica.Usuario.Usuario;
 import Logica.Vehiculo.Vehiculo;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,10 +33,15 @@ public class GACETServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         //int caso = Integer.parseInt(request.getParameter("caso"));
+        
         ArrayList<Vehiculo> vehiculos = ((Usuario) request.getSession().getAttribute("usuario")).getVehiculo();
-        //int id = Integer.parseInt(request.getParameter("vehiculoActual"));
-        System.out.println(request.getParameter("vehiculoActual"));
-        response.getWriter().println("hola");
+        int id = Integer.parseInt(request.getParameter("posVehiActual"));
+        Vehiculo vehiculoActual = vehiculos.get(id);
+        response.getWriter().println("{\"combustible\": \""+vehiculoActual.getCombustible().get(0).getTipo()
+                +"\", \"aceite\": \""+vehiculoActual.getAceite().getMarca()+"\", \"descripcion\": \""
+                +vehiculoActual.getAceite().getCaracteristica()+"\", \"placa\": \""+vehiculoActual.getPlaca()+"\"}");
+        request.getSession().setAttribute("vehiculoActual", vehiculoActual);
+        
         
         
 //        switch(caso){

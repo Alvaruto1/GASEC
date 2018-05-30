@@ -16,19 +16,38 @@
             ArrayList<Vehiculo> vehiculos = null;
             Vehiculo vehiculoActual = null;
             boolean estado = true;
+            boolean estadoV =true;
             int id= 0;
+            // verificar id de usuario no null
             if(request.getSession().getAttribute("id")!=null){
                 id=Integer.parseInt(request.getSession().getAttribute("id").toString());
                 
             }
+            
+            // verificar usuario no null
             if(request.getSession().getAttribute("usuario")!=null){
                 usuario = (Usuario) request.getSession().getAttribute("usuario");  
-                vehiculos = ((Usuario) request.getSession().getAttribute("usuario")).getVehiculo();
-                vehiculoActual = (Vehiculo) request.getSession().getAttribute("vehiculoActual");
             }
             else{
                 response.sendRedirect("iniciarSesion.jsp");
                 estado=false;
+            }
+            
+            //verificar vehiculos usuario no vacio
+            if(((Usuario) request.getSession().getAttribute("usuario")).getVehiculo().size()>0){
+                vehiculos = ((Usuario) request.getSession().getAttribute("usuario")).getVehiculo();
+            }
+            else{
+                estado=false;
+            }
+            
+            // verificar vehiculo actual no null
+            if(request.getSession().getAttribute("vehiculoActual")!=null){
+                vehiculoActual = (Vehiculo) request.getSession().getAttribute("vehiculoActual");
+                
+            }
+            else{
+                estadoV =false;
             }
             
         %>
@@ -50,15 +69,32 @@
 
                         <div class="logo"><h2>Gacet</h2></div>
                         <nav class="menu">
-                            <a href="#somos" >¿Quienes somos?</a>                      
-                                    <a href="#" id="ingresarVehiculo">
-                                       <%
+                            <a href="#somos" >¿Quienes somos?</a>
+                                    
+                                    <a href="<%
                                                 if(usuario.getVehiculo().size()>0){
-                                                    out.println(usuario.getVehiculo().get(0).getPlaca());
+                                                    out.println("#");
+                                                }
+                                                else{
+                                                    out.println("registroVehiculo.jsp");
+                                                }
+                                        
+                                        
+                                            %>
+                                       " id="ingresarVehiculo">
+                                       <%
+                                           if(estadoV){
+                                               if(usuario.getVehiculo().size()>0){
+                                                    out.println(vehiculoActual.getPlaca());
                                                 }
                                                 else{
                                                     out.println("Ingresar Vehiculo");
                                                 }                                                
+                                           }
+                                           else{
+                                               out.println("Ingresar Vehiculo");
+                                           }
+                                                                                               
                                         %>                               
                                         
                                     </a>

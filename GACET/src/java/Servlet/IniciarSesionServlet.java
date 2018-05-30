@@ -68,10 +68,10 @@ public class IniciarSesionServlet extends HttpServlet {
                         usuario.setContrasenia(rS.getString("Contrasenia"));
                         if(datosVehiculo.vehiculosUsuarioById(id)!=null){
                             usuario.setVehiculo(datosVehiculo.vehiculosUsuarioById(id));  
-//                            for(Vehiculo v: usuario.getVehiculo()){
-//                                v.getPlaca();
-//                            }
-                            vehiculoActual=usuario.getVehiculo().get(0);
+                            if(usuario.getVehiculo().size()>0){  
+                                vehiculoActual=usuario.getVehiculo().get(0);                                
+                            }
+                            
                         }                        
                         request.getSession().setAttribute("usuario", usuario);
                         request.getSession().setAttribute("id",id);

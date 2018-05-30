@@ -29,22 +29,24 @@ $(function (){
     });
     
     var etiSelectVehiculo = $('#vehiculo');
-    
+    var etiH2Combustible = $('#combustible');
+    var etiH2Aceite = $('#aceite');
+    var etiH2AceiteCara = $('#caracteristica');
+    var etiAIngresarVehiculo = $('#ingresarVehiculo');
     etiSelectVehiculo.change(function (e) {
         e.preventDefault();
-        $.ajax({
-            url: "GACETServlet",
-            type: "get",
-            data: {vehiculoActual:"diidf"},
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                //informacion de la respuesta del servidor
-                alert(data);
-            }
-            
-        });
-            
+
+        $.post("GACETServlet",{posVehiActual:etiSelectVehiculo.val()},
+            function (data) {  
+                    
+                var ob = jQuery.parseJSON(data);
+                
+                etiH2Combustible.text(ob.combustible);                
+                etiH2Aceite.text(ob.aceite);
+                etiH2AceiteCara.text(ob.descripcion); 
+                etiAIngresarVehiculo.text(ob.placa);                
+         }); 
+         
         
         
     });
@@ -58,3 +60,15 @@ $(function (){
 });
 
 
+//        $.ajax({
+//            url: "GACETServlet",
+//            type: "post",
+//            data: {vehiculoActual:"diidf"},
+//            contentType: false,
+//            processData: false,
+//            success: function (data) {
+//                //informacion de la respuesta del servidor
+//                alert(data);
+//            }
+//            
+//        });
