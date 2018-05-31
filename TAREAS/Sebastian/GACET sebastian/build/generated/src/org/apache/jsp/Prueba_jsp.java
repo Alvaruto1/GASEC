@@ -3,6 +3,7 @@ package org.apache.jsp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import javax.management.relation.RelationNotFoundException;
 import baseDeDatos.DatosEstacion;
 import java.sql.ResultSet;
 import baseDeDatos.DatosUbicacion;
@@ -33,7 +34,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
     PageContext _jspx_page_context = null;
 
     try {
-      response.setContentType("text/html");
+      response.setContentType("text/html;charset=UTF-8");
       pageContext = _jspxFactory.getPageContext(this, request, response,
       			null, true, 8192, true);
       _jspx_page_context = pageContext;
@@ -44,50 +45,59 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       _jspx_out = out;
       _jspx_resourceInjector = (org.glassfish.jsp.api.ResourceInjector) application.getAttribute("com.sun.appserv.jsp.resource.injector");
 
-      out.write("\n");
-      out.write("\n");
-      out.write("\n");
-      out.write("\n");
-      out.write("\n");
-      out.write("<!DOCTYPE html>\n");
-      out.write("<html lang=\"es\">\n");
-      out.write("<head>\n");
-      out.write("  <meta charset=\"UTF-8\">\n");
-      out.write("  <script src=\"http://code.jquery.com/jquery-3.2.1.js\"></script>\n");
-      out.write("  <link href=\"css/jquery.gmaps.css\" rel=\"stylesheet\" />\n");
-      out.write("  <script src=\"js/jquery.gmaps.js\"></script>\n");
-      out.write("\n");
-      out.write("  <style>\n");
-      out.write("       \n");
-      out.write("      .gmaps {\n");
-      out.write("      height:500px;\n");
-      out.write("      width: 100%;\n");
-      out.write("      }\n");
-      out.write("      </style>\n");
-      out.write("  \n");
-      out.write("\n");
-      out.write("</head>\n");
-      out.write("<body>\n");
-      out.write("\n");
-      out.write("    <form id=\"formulario\" runat=\"server\">\n");
-      out.write("      \n");
-      out.write("      <div data-key=\"AIzaSyBoDcMaMDDNmggoN7t-Y6fyr6LCGd_UPB4\"\n");
-      out.write("      data-control-zoom=\"true\"\n");
-      out.write("      data-control-type=\"true\"\n");
-      out.write("      data-control-scale=\"true\"\n");
-      out.write("      data-control-streetview=\"true\"\n");
-      out.write("      data-control-rotate=\"true\"\n");
-      out.write("      data-event-mousewheel=\"true\"\n");
-      out.write(" \n");
-      out.write("      data-zoom=\"14\" role=\"map\" class=\"gmaps\">\n");
-      out.write("\n");
-      out.write("          \n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("<!DOCTYPE html>\r\n");
+      out.write("<html lang=\"es\">\r\n");
+      out.write("<head>\r\n");
+      out.write("  <meta charset=\"UTF-8\">\r\n");
+      out.write("  <script src=\"js/jquery.min.js\"></script>\r\n");
+      out.write("  <script src=\"http://code.jquery.com/jquery-3.2.1.js\"></script>\r\n");
+      out.write("  <link href=\"css/jquery.gmaps.css\" rel=\"stylesheet\" />\r\n");
+      out.write("  <script src=\"js/jquery.gmaps.js\"></script>\r\n");
+      out.write("  \r\n");
+      out.write("  <style>\r\n");
+      out.write("       \r\n");
+      out.write("      .gmaps {\r\n");
+      out.write("      height:500px;\r\n");
+      out.write("      width: 100%;\r\n");
+      out.write("      }\r\n");
+      out.write("      </style>\r\n");
+      out.write("  \r\n");
+      out.write("\r\n");
+      out.write("</head>\r\n");
+      out.write("<body>\r\n");
+      out.write("    \r\n");
+      out.write("\r\n");
+      out.write("    <form id=\"formulario\" runat=\"server\">\r\n");
+      out.write("      \r\n");
+      out.write("      <div data-key=\"AIzaSyBoDcMaMDDNmggoN7t-Y6fyr6LCGd_UPB4\"\r\n");
+      out.write("      data-control-zoom=\"true\"\r\n");
+      out.write("      data-control-type=\"true\"\r\n");
+      out.write("      data-control-scale=\"true\"\r\n");
+      out.write("      data-control-streetview=\"true\"\r\n");
+      out.write("      data-control-rotate=\"true\"\r\n");
+      out.write("      data-event-mousewheel=\"true\"\r\n");
+      out.write(" \r\n");
+      out.write("      data-zoom=\"20\" role=\"map\" class=\"gmaps\">\r\n");
+      out.write("\r\n");
+      out.write("          \r\n");
       out.write("          ");
    
+             
+              
               int id;
-              DatosUbicacion datosUbicacion = new DatosUbicacion("gacet","root","Hola12345"); 
-              DatosEstacion datosEstacion = new DatosEstacion("gacet","root","Hola12345");
+              DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", ""); 
+              DatosEstacion datosEstacion = new DatosEstacion("gacet", "root", "");
               ResultSet rS = datosUbicacion.MostrarTabla();
+              
+              double lat= Double.parseDouble(request.getSession().getAttribute("Latitud").toString());
+              double lon= Double.parseDouble(request.getSession().getAttribute("Longitud").toString());
               
               while(rS.next()){
                   
@@ -96,77 +106,70 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
               ResultSet datos = datosEstacion.sacarEstacion(id);
               
               
+              
           
-      out.write("\n");
-      out.write("      \n");
-      out.write("          \n");
-      out.write("          <div\n");
-      out.write("          data-id=\"1\"\n");
+      out.write("\r\n");
+      out.write("      \r\n");
+      out.write("          \r\n");
+      out.write("          <div\r\n");
+      out.write("          data-id=\"");
+      out.print( rS.getInt("id_Ubicacion"));
+      out.write("\"\r\n");
       out.write("          data-lat=\"");
       out.print( rS.getDouble("Latitud"));
-      out.write("\"\n");
+      out.write("\"\r\n");
       out.write("          data-lng=\"");
       out.print( rS.getDouble("Longitud"));
-      out.write("\"\n");
-      out.write("          class=\"marker\">\n");
-      out.write("          <div class=\"map-card\">\n");
+      out.write("\"\r\n");
+      out.write("          class=\"marker\">\r\n");
+      out.write("          <div class=\"map-card\">\r\n");
       out.write("          <p>Address: ");
       out.print( rS.getString("Direccion"));
-      out.write("</p>\n");
-      out.write("          \n");
+      out.write("</p>\r\n");
+      out.write("          \r\n");
       out.write("          ");
  
            while(datos.next()){
           
           
-      out.write("\n");
+      out.write("\r\n");
       out.write("            <p> Marca:");
       out.print( datos.getString("Marca"));
-      out.write(" </p>\n");
+      out.write(" </p>\r\n");
       out.write("            <p> Puestos:");
       out.print( datos.getInt("Puestos"));
-      out.write("</p>\n");
+      out.write("</p>\r\n");
       out.write("            <p> Valoracion:");
       out.print( datos.getInt("Valoracion"));
-      out.write("</p>\n");
-      out.write("\n");
-      out.write("            </div>\n");
-      out.write("            </div>\n");
+      out.write("</p>\r\n");
+      out.write("\r\n");
+      out.write("            </div>\r\n");
+      out.write("            </div>\r\n");
       out.write("          ");
 
               }
-          
-      out.write("\n");
-      out.write("\n");
-      out.write("        \n");
-      out.write("\n");
-      out.write("          ");
+            }
 
-              }
+       
           
-      out.write("\n");
-      out.write("\n");
-      out.write("      \n");
-      out.write("\n");
-      out.write(" \n");
-      out.write("      <!-- items de ubicaciones -->\n");
-      out.write("\n");
-      out.write("          \n");
-      out.write("      </div>\n");
-      out.write("\n");
-      out.write("    </form>\n");
-      out.write("\n");
-      out.write("    <script>\n");
-      out.write("      $(document).ready(function () {\n");
-      out.write("      $('.gmaps').gmaps();\n");
-      out.write("      });\n");
-      out.write("    </script>\n");
-      out.write("\n");
-      out.write("    \n");
-      out.write("    \n");
-      out.write("\n");
-      out.write("  </body>\n");
-      out.write("</html>\n");
+      out.write("\r\n");
+      out.write("    \r\n");
+      out.write("      </div>\r\n");
+      out.write("\r\n");
+      out.write("    </form>\r\n");
+      out.write("\r\n");
+      out.write("    <script>\r\n");
+      out.write("      $(document).ready(function () {\r\n");
+      out.write("      $('.gmaps').gmaps();\r\n");
+      out.write("      });\r\n");
+      out.write("    </script>\r\n");
+      out.write("    \r\n");
+      out.write("    \r\n");
+      out.write("    \r\n");
+      out.write("    <script src=\"js/DatosMapa.js\"></script>\r\n");
+      out.write("\r\n");
+      out.write("  </body>\r\n");
+      out.write("</html>\r\n");
     } catch (Throwable t) {
       if (!(t instanceof SkipPageException)){
         out = _jspx_out;

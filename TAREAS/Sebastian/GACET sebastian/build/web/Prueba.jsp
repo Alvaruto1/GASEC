@@ -4,17 +4,20 @@
     Author     : Sebas
 --%>
 
+<%@page import="javax.management.relation.RelationNotFoundException"%>
 <%@page import="baseDeDatos.DatosEstacion"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="baseDeDatos.DatosUbicacion"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <script src="js/jquery.min.js"></script>
   <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
   <link href="css/jquery.gmaps.css" rel="stylesheet" />
   <script src="js/jquery.gmaps.js"></script>
-
+  
   <style>
        
       .gmaps {
@@ -26,6 +29,7 @@
 
 </head>
 <body>
+    
 
     <form id="formulario" runat="server">
       
@@ -37,14 +41,19 @@
       data-control-rotate="true"
       data-event-mousewheel="true"
  
-      data-zoom="14" role="map" class="gmaps">
+      data-zoom="20" role="map" class="gmaps">
 
           
           <%   
+             
+              
               int id;
-              DatosUbicacion datosUbicacion = new DatosUbicacion("gacet","root","Hola12345"); 
-              DatosEstacion datosEstacion = new DatosEstacion("gacet","root","Hola12345");
+              DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", ""); 
+              DatosEstacion datosEstacion = new DatosEstacion("gacet", "root", "");
               ResultSet rS = datosUbicacion.MostrarTabla();
+              
+              double lat= Double.parseDouble(request.getSession().getAttribute("Latitud").toString());
+              double lon= Double.parseDouble(request.getSession().getAttribute("Longitud").toString());
               
               while(rS.next()){
                   
@@ -53,11 +62,12 @@
               ResultSet datos = datosEstacion.sacarEstacion(id);
               
               
+              
           %>
       
           
           <div
-          data-id="1"
+          data-id="<%= rS.getInt("id_Ubicacion")%>"
           data-lat="<%= rS.getDouble("Latitud")%>"
           data-lng="<%= rS.getDouble("Longitud")%>"
           class="marker">
@@ -76,20 +86,11 @@
             </div>
           <%
               }
+            }
+
+       
           %>
-
-        
-
-          <%
-              }
-          %>
-
-      
-
- 
-      <!-- items de ubicaciones -->
-
-          
+    
       </div>
 
     </form>
@@ -99,9 +100,10 @@
       $('.gmaps').gmaps();
       });
     </script>
-
     
     
+    
+    <script src="js/DatosMapa.js"></script>
 
   </body>
 </html>

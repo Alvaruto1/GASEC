@@ -117,6 +117,7 @@ public class DatosUbicacion {
               + "Latitud, "
               + "Longitud, "
               + "Direccion "
+              + "from ubicacion " 
               + "ORDER BY id_Ubicacion");
             
         tabla = pstm.executeQuery();
