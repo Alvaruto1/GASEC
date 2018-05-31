@@ -15,9 +15,10 @@ $(function (){
     });
     
     etiBtnConsultas.click(function (e) {
+        
         etiDivConfigVehiculo.attr("class","ocultar");
         etiDivConsultas.attr("class","mostrar");
-        etiDivMostrarmapa.attr("class","ocultar");        
+        etiDivMostrarmapa.attr("class","ocultar");
         
     });
     
@@ -33,6 +34,7 @@ $(function (){
     var etiH2Aceite = $('#aceite');
     var etiH2AceiteCara = $('#caracteristica');
     var etiAIngresarVehiculo = $('#ingresarVehiculo');
+    var etiH2VehiculoTipo = $('#vehiculoTipo');
     etiSelectVehiculo.change(function (e) {
         e.preventDefault();
 
@@ -44,7 +46,8 @@ $(function (){
                 etiH2Combustible.text(ob.combustible);                
                 etiH2Aceite.text(ob.aceite);
                 etiH2AceiteCara.text(ob.descripcion); 
-                etiAIngresarVehiculo.text(ob.placa);                
+                etiAIngresarVehiculo.text(ob.placa);
+                etiH2VehiculoTipo.text(ob.tipo);
          }); 
          
         
@@ -52,7 +55,7 @@ $(function (){
     });
     
     
-    
+   
     
     
     

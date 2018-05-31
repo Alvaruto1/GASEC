@@ -10,7 +10,7 @@ public class Gasolina extends Combustible {
      * Default constructor
      */
     public Gasolina() {
-        
+        this.tipoDefecto();
     }
     
     @Override

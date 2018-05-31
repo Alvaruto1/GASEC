@@ -29,12 +29,12 @@
         <servlet-class>Servlet.ModificarCuentaServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>EditarVehiculoServlet</servlet-name>
-        <servlet-class>Servlet.EditarVehiculoServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ConfiguracionVehiculoServlet</servlet-name>
         <servlet-class>Servlet.ConfiguracionVehiculoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarVehiculoServlet</servlet-name>
+        <servlet-class>Servlet.EditarVehiculoServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>inicioSesionServlet</servlet-name>
@@ -65,12 +65,12 @@
         <url-pattern>/ModificarCuentaServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EditarVehiculoServlet</servlet-name>
-        <url-pattern>/EditarVehiculoServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ConfiguracionVehiculoServlet</servlet-name>
         <url-pattern>/ConfiguracionVehiculoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarVehiculoServlet</servlet-name>
+        <url-pattern>/EditarVehiculoServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -4,6 +4,10 @@
     Author     : alvar
 --%>
 
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Logica.Vehiculo.Vehiculo"%>
 <%@page import="Logica.Usuario.Usuario"%>
@@ -27,28 +31,36 @@
             // verificar usuario no null
             if(request.getSession().getAttribute("usuario")!=null){
                 usuario = (Usuario) request.getSession().getAttribute("usuario");  
-            }
-            else{
-                response.sendRedirect("iniciarSesion.jsp");
-                estado=false;
-            }
-            
-            //verificar vehiculos usuario no vacio
-            if(((Usuario) request.getSession().getAttribute("usuario")).getVehiculo().size()>0){
-                vehiculos = ((Usuario) request.getSession().getAttribute("usuario")).getVehiculo();
-            }
-            else{
-                estado=false;
-            }
-            
-            // verificar vehiculo actual no null
-            if(request.getSession().getAttribute("vehiculoActual")!=null){
-                vehiculoActual = (Vehiculo) request.getSession().getAttribute("vehiculoActual");
+                    //verificar vehiculos usuario no vacio
+                if(((Usuario) request.getSession().getAttribute("usuario")).getVehiculo().size()>0){
+                    vehiculos = ((Usuario) request.getSession().getAttribute("usuario")).getVehiculo();
+                    // verificar vehiculo actual no null
+                    if(request.getSession().getAttribute("vehiculoActual")!=null){
+                        vehiculoActual = (Vehiculo) request.getSession().getAttribute("vehiculoActual");
+                        estado=true;
+                        estadoV=true;
+                    }
+                    else{
+                        estadoV =false;
+                        estado = false;
+                        //response.sendRedirect("iniciarSesion.jsp");
+                    }
+                }
+                else{   
+                    estado=false;  
+                    estadoV=false;
+                }
+
                 
             }
             else{
-                estadoV =false;
+                estado=false;
+                estadoV=false;
+                response.sendRedirect("iniciarSesion.jsp");
+                
             }
+            
+            System.out.println(vehiculoActual+"-"+estadoV);
             
         %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -99,7 +111,10 @@
                                         
                                     </a>
                             <a href="modificarCuenta.jsp"> <%=usuario.getAlias()%> </a>
-                            <a href="#">Cerrar Sesion</a>
+                            <form action="GACETServlet" method="post">
+                                <input type="hidden" value="0" id="caso" name="caso">
+                                <input type="submit" value="Cerrar Sesion">
+                            </form>
                         </nav>
                 </div>
             </div>
@@ -143,7 +158,7 @@
                                     out.println("<option value="+(i)+">"+vehiculos.get(i).getPlaca()+"</option>");                            
                                 }
 
-                            }
+                            }                            
                             
                         }
                         
@@ -154,10 +169,14 @@
                     
             <div>Caracteristicas Vehiculo:</div>
             
+            <div><h2>Tipo Vehiculo</h2> <h2 id="vehiculoTipo"><%if(estado){
+                out.print(vehiculos.get(0).getTipo());}%></h2></div>
+            
+            
             <div><h2>Combustible</h2> <h2 id="combustible"><%if(estado){
-                out.println(vehiculos.get(0).getCombustible().get(0).getTipo());}%></h2></div>
+                out.print(vehiculos.get(0).getCombustible().get(0).getTipo());}%></h2></div>
             <div>
-                <h2>Aceite: </h2> <h2 id="aceite"><%if(estado){out.println(vehiculos.get(0).getAceite().getMarca());}%></h2>
+                <h2>Aceite: </h2> <h2 id="aceite"><%if(estado){out.print(vehiculos.get(0).getAceite().getMarca());}%></h2>
                 <h2>Caracteristica: </h2> <h2 id="caracteristica"><%if(estado){out.println(vehiculos.get(0).getAceite().getCaracteristica());}%></h2>
             </div> 
             
@@ -186,18 +205,39 @@
 <div id="consultas" name="consultas" class="ocultar">          
        <div class="contPrincipal">
             
-            <form action="RegistrarVehiculoServlet" method="post">
+            <form action="ActualizarDatosServlet" method="post">
                 
                 
                 <div class="contPanel">
                     <div class="contTitulo">
                         <h1 class="titulo">CONSULTAS</h1>
                     </div>      
-                    <div class="contForm">    
+                    <div class="contForm"> 
+                        <label for="tipoVehiculo">Tipo Vehiculo:</label>                        
+                        <input type="text" disabled id="tipoVehiculo" name="tipoVehiculo" pattern="[0-9]{0-99999999}" placeholder="Escriba kilometro recorridos" 
+                               value="<%
+                                   if(estadoV){
+                                       out.print(vehiculoActual.getTipo());
+                                   }
+                               %>">
                         <label for="fecha">Fecha de SOAT:</label>
-                        <input type="date" id="fecha" name="fecha">
+                        <%
+                            
+                            Date fecha = null;
+                            SimpleDateFormat formatoFecha = null;
+                            if(estadoV){
+                                
+                                System.out.println((vehiculoActual.getSoat().getFecha()==null)+"------------------");
+                                fecha = vehiculoActual.getSoat().getFecha().getTime();
+                                
+                                formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+                            }
+                            
+                        %>
+                        <input type="date" disabled id="fecha" name="fecha" value="<%if(estadoV){out.print(formatoFecha.format(fecha));}%>">
                         <label for="empresa">Empresa:</label>                        
-                        <input type="text" id="empresa" name="empresa" pattern="[A-Z]{4-16}" placeholder="Escriba la empresa de SOAT">
+                        <input type="text" disabled id="empresa" name="empresa" pattern="[A-Z]{4-16}" placeholder="Escriba la empresa de SOAT" 
+                               value="<%if(estadoV){out.print(vehiculoActual.getSoat().getEmpresa());}%>">
                         <label for="ciudad">Ciudad:</label>                        
                         <datalist id="ciudades">
                             <option value="Bogota">
@@ -206,16 +246,30 @@
                             <option value="Medellin">
                             <option value="Ibague">
                         </datalist>
-                        <input name="ciudad" id="ciudad" list="ciudades" placeholder="Escoja la ciudad">
+                        <input name="ciudad" disabled id="ciudad" list="ciudades" placeholder="Escoja la ciudad " 
+                               value="<%if(estadoV){out.print(vehiculoActual.getSoat().getCiudad());}%>">
                         <label for="tipoServicio">Tipo servicio:</label>
-                        <select id="tipoServicio" name="tipoServicio">
-                            <option value="particular">Particular</option>
-                            <option value="publico">Publico</option>
-                            <option value="carga">Carga</option>
-                            <option value="diplomatico">Diplomatico</option>
+                        <select disabled id="tipoServicio" name="tipoServicio" value="<%if(estadoV){out.print(vehiculoActual.getSoat().getTipoDeServicio());}%>">
+                            <option value="1">Particular</option>
+                            <option value="0">Publico</option>
+                            <option value="2">Carga</option>
+                            <option value="3">Diplomatico</option>
                         </select>
                         <div>Dias faltantes:</div>
-                        <div>125</div>
+                        <div>
+                            <%
+                            if(estado){
+                                Date fechaActual = new Date();
+                                Date fechaMante = vehiculoActual.getSoat().getFecha().getTime();
+                                long segundosActual = fechaActual.getTime();
+                                long segundosMante = fechaMante.getTime();
+                                long totalSegundos = segundosActual-segundosMante;
+                                
+                                long dias = 365-(((totalSegundos/1000)/60)/60)/24;
+                                out.print(dias);
+                            }
+                            %>
+                        </div>
                     </div>    
                 </div>
                 
@@ -223,11 +277,31 @@
                     <div class="contTitulo">
                         <h1 class="titulo">Mantenimiento</h1>
                     </div>
+                    <%
+                        Date fechaM = null;
+                        SimpleDateFormat formatoFechaM = null;
+                            if(estadoV){
+                            fechaM = vehiculoActual.getFechaUltimoMantenimiento().getTime();
+                            formatoFechaM = new SimpleDateFormat("yyyy-MM-dd");
+                            }
+                        %>
                     <div class="contForm">
                         <label for="fecha">Fecha ultimo mantenimiento:</label>
-                        <input type="date" id="fecha" name="fecha">
+                        <input disabled type="date" id="fecha" name="fecha" 
+                               value="<%if(estadoV){out.print(formatoFechaM.format(fechaM));}%>">
                         <div>Dias faltantes:</div>
-                        <div>45</div>                                                
+                        <div><%
+                            if(estado){
+                                Date fechaActual = new Date();
+                                Date fechaMante = vehiculoActual.getFechaUltimoMantenimiento().getTime();
+                                long segundosActual = fechaActual.getTime();
+                                long segundosMante = fechaMante.getTime();
+                                long totalSegundos = segundosActual-segundosMante;
+                                
+                                long dias = 365-(((totalSegundos/1000)/60)/60)/24;
+                                out.print(dias);
+                            }
+                            %></div>                                                
                     </div>
                         
                 </div>
@@ -238,7 +312,12 @@
                     </div>
                     <div class="contForm">
                         <label for="kmRecorridos">Kilometros recorridos:</label>                        
-                        <input type="text" id="empresa" name="empresa" pattern="[0-9]{0-99999999}" placeholder="Escriba kilometro recorridos">
+                        <input type="text" disabled id="empresa" name="empresa" pattern="[0-9]{0-99999999}" placeholder="Escriba kilometro recorridos" 
+                               value="<%
+                                   if(estadoV){
+                                       out.print(vehiculoActual.getKmRecorrido());
+                                   }
+                               %>">
                         
                         
                     </div>
@@ -246,7 +325,7 @@
                 </div>                
                 
                 
-                <input type="submit" id="registrar" name="registrar" value="Registrar">
+                
             </form>
         </div>             
                   

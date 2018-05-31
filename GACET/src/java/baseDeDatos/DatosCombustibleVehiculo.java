@@ -78,6 +78,26 @@ public class DatosCombustibleVehiculo {
         }
 
     }
+    
+    /**
+     * obtener ide de combustible por vehiculo
+     * @param idVehiculo
+     * @return 
+     */
+    public int encontrarIdCombustiblePorVehiculo(int idVehiculo){
+        int id=0;
+        try {
+            PreparedStatement pS = c.getConexion().prepareStatement("SELECT id_CombustibleV FROM soat where id_vehiculo=?");
+            ResultSet rS = pS.executeQuery();
+            while(rS.next()){
+                id = rS.getInt("id_CombustibleV");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al intentar buscar id soat: "+ex);
+        }
+        
+        return id;
+    }
 
     public void borrarCombustibleVehiculo(int id) {
 

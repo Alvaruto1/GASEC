@@ -47,7 +47,7 @@ public class Conexion {
             
         } catch (SQLException |ClassNotFoundException e) {
             
-            System.out.println("Error conexion"); 
+            System.out.println("Error conexion: "+e); 
            
         }
         

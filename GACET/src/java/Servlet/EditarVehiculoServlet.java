@@ -5,19 +5,27 @@
  */
 package Servlet;
 
-
-
 import Logica.Aceite.Aceite;
-import Logica.EstacionGasolina.*;
-import Logica.SOAT.*;
+import Logica.EstacionGasolina.ACPM;
+import Logica.EstacionGasolina.Combustible;
+import Logica.EstacionGasolina.Gas;
+import Logica.EstacionGasolina.Gasolina;
+import Logica.SOAT.SOAT;
+import Logica.SOAT.SOATBus;
+import Logica.SOAT.SOATCamion;
+import Logica.SOAT.SOATCarro;
+import Logica.SOAT.SOATMoto;
 import Logica.Ubicacion.Ubicacion;
 import Logica.Usuario.Usuario;
-import Logica.Vehiculo.*;
+import Logica.Vehiculo.Bus;
+import Logica.Vehiculo.Camion;
+import Logica.Vehiculo.Carro;
+import Logica.Vehiculo.Moto;
+import Logica.Vehiculo.Vehiculo;
 import baseDeDatos.DatosAceite;
 import baseDeDatos.DatosSoat;
 import baseDeDatos.DatosUbicacion;
 import baseDeDatos.DatosVehiculo;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.GregorianCalendar;
@@ -30,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alvar
  */
-public class RegistrarVehiculoServlet extends HttpServlet {
+public class EditarVehiculoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,22 +52,31 @@ public class RegistrarVehiculoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");
-        int idUsuario = Integer.parseInt(request.getSession().getAttribute("id").toString());
-        Vehiculo vehiculo=null;        
-        SOAT soat;
-        Combustible combustible;
-        Aceite aceite = new Aceite();
-        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet", "root", "root");
-        DatosSoat datosSoat = new DatosSoat("gacet", "root", "root");
-        DatosAceite datosAceite = new DatosAceite("gacet", "root", "root");
+        
+        Usuario usuario = null;
         DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "root");
+        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet", "root", "root"); 
+        DatosAceite datosAceite = new DatosAceite("gacet", "root", "root"); 
+        DatosSoat datosSoat = new DatosSoat("gacet", "root", "root");
+        Vehiculo vehiculo = null;
+        SOAT soat = null;
+        Aceite aceite = new Aceite();
+        Combustible combustible = null;
+        int idVehiculo=0;
+        int idUsuario=0;
+        if(request.getSession().getAttribute("usuario")!=null){
+            usuario = (Usuario) request.getSession().getAttribute("usuario"); 
+            idUsuario= Integer.parseInt(request.getSession().getAttribute("id").toString());
+            if(request.getSession().getAttribute("vehiculoActual") !=null){
+                idVehiculo = ((Vehiculo)request.getSession().getAttribute("vehiculoActual")).getId();                
+            }
+        }
         
-        
-        if(usuario!=null){
-            
-            //setear datos vehiculo
-            switch(Integer.parseInt(request.getParameter("vehiculo"))){
+        else{
+            response.sendRedirect("iniciarSesion.jps");
+        }
+                
+        switch(Integer.parseInt(request.getParameter("vehiculo"))){
                 case 1:
                     vehiculo = new Carro();   
                     soat= new SOATCarro();
@@ -95,8 +112,10 @@ public class RegistrarVehiculoServlet extends HttpServlet {
             soat.setCiudad(request.getParameter("ciudad"));        
             soat.setTipoDeServicio(Integer.parseInt(request.getParameter("tipoServicio")));
 
-            datosSoat.ingresarSOAT(soat);
-            int idSoat = datosSoat.getIdRegistroActual();
+            
+            int idSoat = datosSoat.encontrarIdSoatPorVehiculo(idVehiculo);
+            datosSoat.actualizarSOAT(idSoat, soat);
+            
             System.out.println(idSoat+" idSoat");
             
             vehiculo.setSoat(soat);
@@ -132,32 +151,32 @@ public class RegistrarVehiculoServlet extends HttpServlet {
             aceite.setTipo(vehiculo.getTipo());       
             aceite.setKmCambioAceite(Integer.parseInt(request.getParameter("kmMaximoAceite")));   
             aceite.setCaracteristica(request.getParameter("referenciaAceite"));
-
-            datosAceite.ingresarAceite(aceite);
-            int idAceite = datosAceite.getIdRegistroActual();
+            
+                        
+            
+            int idAceite = datosAceite.encontrarIdAceitePorVehiculo(idVehiculo);
+            datosAceite.actualizarAceite(idAceite, aceite);
+            
             
             vehiculo.setAceite(aceite);
             Ubicacion ubicacion = new Ubicacion();
             ubicacion.setDireccion("no registrada");
             ubicacion.setLatitud(0);
             ubicacion.setLongitud(0);
-            datosUbicacion.IngresarUbicacion(ubicacion);
-            int idUbicacion = datosUbicacion.getIdRegistroActual();
+            
+            
+            int idUbicacion = datosUbicacion.encontrarIdUbicacionPorVehiculo(idVehiculo);
+            datosUbicacion.actualizarUbicacion(idUbicacion, ubicacion);
            
-            datosVehiculo.IngresarVehiculo(idUsuario,idSoat, idAceite, idUbicacion, id_combustible, vehiculo);
+            datosVehiculo.actualizarVehiculo(idVehiculo,idUsuario,idSoat, idAceite, idUbicacion, id_combustible, vehiculo);
 
-
-            usuario.agregarVehiculo(vehiculo);
+            usuario.getVehiculo().clear();
+            usuario.setVehiculo(datosVehiculo.vehiculosUsuarioById(idUsuario));    
+            
+            
             
             
             request.getSession().setAttribute("vehiculoActual",vehiculo);
-            
-        }
-        else{
-            response.sendRedirect("iniciarSesion.jsp");
-        }
-        
-        
         
         
         
@@ -172,7 +191,7 @@ public class RegistrarVehiculoServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             if(usuario !=null){
-                out.println("<h1>"+"Vehiculo con placas "+vehiculo.getPlaca()+" registrado correctamente</h1>");                
+                out.println("<h1>"+"Vehiculo con placas "+vehiculo.getPlaca()+" fue editado correctamente</h1>");                
             }            
             
             out.println("</body>");

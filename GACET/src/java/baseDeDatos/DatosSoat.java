@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -88,6 +86,30 @@ public class DatosSoat {
         
     }
     
+    /**
+     * obtener ide de soat por vehiculo
+     * @param idVehiculo
+     * @return 
+     */
+    public int encontrarIdSoatPorVehiculo(int idVehiculo){
+        int id=0;
+        try {
+            PreparedStatement pS = c.getConexion().prepareStatement("SELECT id_Soat FROM vehiculo where id_Vehiculo = ?");
+            pS.setInt(1, idVehiculo);
+            ResultSet rS = pS.executeQuery();
+            
+            
+            while(rS.next()){
+                id = rS.getInt("id_Soat");
+                
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al intentar buscar id soat: "+ex);
+        }
+        
+        return id;
+    }
+    
     public SOAT mostrarSOAT(int id) {
         SOAT soat = null;
         try {
@@ -127,6 +149,8 @@ public class DatosSoat {
                 soat.setCiudad(rS.getString("Ciudad"));
                 soat.setEmpresa("Empresa");
                 soat.setFecha(desglosarFecha(rS.getString("Fecha")));
+                
+                
                 soat.setPrecio(rS.getDouble("Precio"));
                 soat.setTipoDeServicio(rS.getInt("id_TipoServicio"));
                 
@@ -143,7 +167,7 @@ public class DatosSoat {
         return soat;
     }
 
-    public void actualizarSOAT(SOAT so) {
+    public void actualizarSOAT(int id,SOAT so) {
 
         try {
             PreparedStatement pstm = c.getConexion().prepareStatement("update soat set TipoSoat = ?, "
@@ -151,20 +175,21 @@ public class DatosSoat {
                     + " Ciudad = ?,"
                     + " Fecha = ?,"
                     + " id_TipoServicio = ?,"
-                    + " Precio = ?,"
+                    + " Precio = ? "
                     + " where id_Soat = ?");
-
+            Date fecha = so.getFecha().getTime();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
             pstm.setString(1, so.getClass().toString());
             pstm.setString(2, so.getEmpresa());
             pstm.setString(3, so.getCiudad());
-            pstm.setString(4, so.getFecha().toString());
+            pstm.setString(4, formatoFecha.format(fecha));
             pstm.setInt(5, so.getTipoDeServicio());
             pstm.setDouble(6, so.getPrecio());
-
+            pstm.setInt(7, id);
             pstm.executeUpdate();
-
+            System.out.println("Se actualizo correctamente el soat");
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error actuzaliar soat"+e);
         }
 
     }

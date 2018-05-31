@@ -11,6 +11,7 @@ public class ACPM extends Combustible {
      * Default constructor
      */
     public ACPM() {
+        this.tipoDefecto();
         
     }
     

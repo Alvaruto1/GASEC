@@ -8,6 +8,7 @@ package Servlet;
 import Logica.Usuario.Usuario;
 import Logica.Vehiculo.Vehiculo;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,19 +34,22 @@ public class GACETServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         //int caso = Integer.parseInt(request.getParameter("caso"));
-        
+        Usuario usuario=(Usuario) request.getSession().getAttribute("usuario");
         ArrayList<Vehiculo> vehiculos = ((Usuario) request.getSession().getAttribute("usuario")).getVehiculo();
-        int id = Integer.parseInt(request.getParameter("posVehiActual"));
-        Vehiculo vehiculoActual = vehiculos.get(id);
-        response.getWriter().println("{\"combustible\": \""+vehiculoActual.getCombustible().get(0).getTipo()
-                +"\", \"aceite\": \""+vehiculoActual.getAceite().getMarca()+"\", \"descripcion\": \""
-                +vehiculoActual.getAceite().getCaracteristica()+"\", \"placa\": \""+vehiculoActual.getPlaca()+"\"}");
-        request.getSession().setAttribute("vehiculoActual", vehiculoActual);
-        
+        int id;
+        if(request.getParameter("posVehiActual")!=null){
+            id= Integer.parseInt(request.getParameter("posVehiActual"));
+            Vehiculo vehiculoActual = vehiculos.get(id);
+            response.getWriter().println("{\"combustible\": \""+vehiculoActual.getCombustible().get(0).getTipo()
+                    +"\", \"aceite\": \""+vehiculoActual.getAceite().getMarca()+"\", \"descripcion\": \""
+                    +vehiculoActual.getAceite().getCaracteristica()+"\", \"placa\": \""+vehiculoActual.getPlaca()+"\", \"tipo\":\""+vehiculoActual.getTipo()+"\"}");
+            request.getSession().setAttribute("vehiculoActual", vehiculoActual);            
+        }
         
         
 //        switch(caso){
-//            case 0:                
+//            case 0: 
+//                
 //                break;
 //            case 1:
 //                break;
@@ -61,19 +65,33 @@ public class GACETServlet extends HttpServlet {
 //        }
         
         
+        if(request.getParameter("caso")!=null){
+            if(Integer.parseInt(request.getParameter("caso"))==0){
+                try (PrintWriter out = response.getWriter()) {
+                    /* TODO output your page here. You may use following sample code. */
+                    out.println("<!DOCTYPE html>");
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Cerrar sesion</title>");   
+                    //tiempo de demorar en la pagina
+                    out.println("<meta http-equiv=\"Refresh\" content=\"2;url="+"gacet.jsp"+"\">");
+                    out.println("</head>");
+                    out.println("<body>");
+
+                    out.println("<h1>"+"Ha cerrado su sesion, gracias por visitarnos "+usuario.getNombre()+"</h1>");                
+
+
+                    out.println("</body>");
+                    out.println("</html>");
+                }
+                request.getSession().invalidate(); 
+                response.sendRedirect("iniciarSesion.jsp");
+                               
+            }
+            
+            
+        }
         
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet GACETServlet</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet GACETServlet at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

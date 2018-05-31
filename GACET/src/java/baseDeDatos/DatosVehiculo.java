@@ -10,6 +10,7 @@ import Logica.EstacionGasolina.ACPM;
 import Logica.EstacionGasolina.Combustible;
 import Logica.EstacionGasolina.Gas;
 import Logica.EstacionGasolina.Gasolina;
+import Logica.Usuario.Usuario;
 import Logica.Vehiculo.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,8 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -249,6 +249,71 @@ public class DatosVehiculo {
             System.out.println(ex+": error encontrar vehiculo");
         }
         return rS;
+    }
+    
+    /**
+     * actualizarVehiculo
+     * @param id
+     * @param v
+     * @param id_usuario
+     * @param id_soat
+     * @param id_Aceite
+     * @param id_Ubicacion
+     * @param id_CombustibleV 
+     */
+    public void actualizarVehiculo(int id, int id_usuario, int id_soat,int id_Aceite, int id_Ubicacion , int id_CombustibleV,Vehiculo v) {
+        
+        
+        try {            
+            PreparedStatement insertar = c.getConexion().prepareStatement("update vehiculo set "
+                    + "id_Usuario = ?,"
+                    + "Placa = ?,"
+                    + "id_Soat = ?,"
+                    + "Mantenimiento = ?,"
+                    + "Cilindraje = ?,"
+                    + "id_Aceite = ?,"
+                    + "id_Ubicacion = ?,"                    
+                    + "id_CombustibleV = ?,"
+                    + "id_TipoVehiculo=? "                    
+                    + "where id_Vehiculo = ?");
+            
+            
+            // con vertir formato fecha
+            Date fecha = v.getFechaUltimoMantenimiento().getTime();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+            
+            insertar.setInt(1, id_usuario);
+            insertar.setString(2, v.getPlaca());
+            insertar.setInt(3, id_soat);
+            insertar.setString(4,formatoFecha.format(fecha));
+            insertar.setInt(5, v.getCilindraje());
+            insertar.setInt(6, id_Aceite);
+            insertar.setInt(7, id_Ubicacion);
+            insertar.setInt(8, id_CombustibleV);
+            int idTipoVehiculo=0;
+            switch(v.getTipo()){
+                case "Moto":
+                    idTipoVehiculo=2;
+                    break;
+                case "Carro":
+                    idTipoVehiculo=1;
+                    break;
+                case "Camion":
+                    idTipoVehiculo=3;
+                    break;
+                case "Bus":
+                    idTipoVehiculo=4;
+                    break;                
+            }
+            insertar.setInt(9,idTipoVehiculo);
+            insertar.setInt(10, id);
+            insertar.executeUpdate();
+            System.out.println("Actualizacion correcta vehiculo9");
+
+        } catch (SQLException e) {
+            System.out.println("error actualizar vehiuclo: "+e);
+        }
+
     }
     
     public GregorianCalendar desglosarFecha(String fecha){

@@ -95,27 +95,49 @@ public class DatosAceite {
     }
 
     
-    public void actualizarAceite(Aceite ace) {
+    public void actualizarAceite(int id,Aceite ace) {
 
         try {
             PreparedStatement pstm = c.getConexion().prepareStatement("update aceite set TipoAceite = ?, "
                     + " Marca = ?,"
                     + " KmMaximo = ?,"
-                    + " Caracteristica = ?,"
+                    + " Caracteristica = ? "
                     + " where id_Aceite = ?");
             
             pstm.setString(1, ace.getTipo());
             pstm.setString(2, ace.getMarca());
             pstm.setInt(3, ace.getKmCambioAceite());
             pstm.setString(4, ace.getCaracteristica());
+            pstm.setInt(5, id);
 
             pstm.executeUpdate();
-
+            System.out.println("Se actualizao correectamnete el aceite");
 
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error al actualizar aceite"+e);
         }
 
+    }
+    
+    /**
+     * obtener ide de combustible por vehiculo
+     * @param idVehiculo
+     * @return 
+     */
+    public int encontrarIdAceitePorVehiculo(int idVehiculo){
+        int id=0;
+        try {
+            PreparedStatement pS = c.getConexion().prepareStatement("SELECT id_Aceite FROM vehiculo where id_Vehiculo=?");
+            pS.setInt(1, idVehiculo);
+            ResultSet rS = pS.executeQuery();
+            while(rS.next()){
+                id = rS.getInt("id_Aceite");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al intentar buscar id aceite: "+ex);
+        }
+        
+        return id;
     }
 
     public void borrarAceite(int id) {

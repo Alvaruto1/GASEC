@@ -48,6 +48,50 @@ public class DatosUbicacion {
         
     }
     
+    /**
+     * obtener ide de ubicacion por vehiculo
+     * @param idVehiculo
+     * @return 
+     */
+    public int encontrarIdUbicacionPorVehiculo(int idVehiculo){
+        int id=0;
+        try {
+            PreparedStatement pS = c.getConexion().prepareStatement("SELECT id_Ubicacion FROM vehiculo where id_Vehiculo=?");
+            pS.setInt(1, idVehiculo);
+            ResultSet rS = pS.executeQuery();
+            while(rS.next()){
+                id = rS.getInt("id_Ubicacion");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al intentar buscar id soat: "+ex);
+        }
+        
+        return id;
+    }
+    
+    public void actualizarUbicacion(int id,Ubicacion u) {
+
+        try {
+            PreparedStatement insertar = c.getConexion().prepareStatement("update ubicacion set "
+                    
+                    + "Precio = ?,"
+                    + "Longitud = ?,"
+                    + "Latitud = ?,"
+                    + "Direccion = ?"
+                    + " where id_Ubicacion = ?");
+            
+            insertar.setDouble(1, u.getLatitud());
+            insertar.setDouble(2, u.getLongitud());
+            insertar.setString(3, u.getDireccion());
+            insertar.setInt(4, id);
+            insertar.executeUpdate();
+            System.out.println("Se actualizo correctamente la ubicacion");
+        } catch (SQLException e) {
+            System.out.println("Error actuzaliar ubicacion "+e);
+        }
+
+    }
+    
     public int getIdRegistroActual() {
         return idRegistroActual;
     }
