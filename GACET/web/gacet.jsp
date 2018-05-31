@@ -190,12 +190,7 @@
                     <input type="hidden" value="1" name="opcion">
                     <input type="hidden" value="0" name="idVehiculo" id="idVehiculo">
                     <input type="submit" value="Editar vehiculo">
-                </form>
-                <form action="ConfiguracionVehiculoServlet" method="post">
-                    <input type="hidden" value="2" name="opcion">
-                    <input type="hidden" value="0" name="idVehiculo" id="idVehiculo">
-                    <input type="submit" value="Eliminar vehiculo">
-                </form>
+                </form>                
             </div>
             
         </div>
