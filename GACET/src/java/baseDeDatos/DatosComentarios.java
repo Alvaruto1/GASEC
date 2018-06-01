@@ -6,9 +6,20 @@
 package baseDeDatos;
 
 import Logica.Comentario.Comentario;
+import Logica.EstacionGasolina.ACPM;
+import Logica.EstacionGasolina.Combustible;
+import Logica.EstacionGasolina.Gas;
+import Logica.EstacionGasolina.Gasolina;
+import Logica.Vehiculo.Bus;
+import Logica.Vehiculo.Camion;
+import Logica.Vehiculo.Carro;
+import Logica.Vehiculo.Moto;
+import Logica.Vehiculo.Vehiculo;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -53,13 +64,13 @@ public class DatosComentarios {
         try {
             
             
-            PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id, "
+            PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id_Comentario, "
                     + "id_Usuario,"
                     + "id_Estacion,"
                     + "Comentario,"
                     + "Calificacion"
                     + " FROM Comentario "
-                    + " ORDER BY id");
+                    + " ORDER BY id_Comentario");
             
             
             tabla = pstm.executeQuery();
@@ -88,6 +99,44 @@ public class DatosComentarios {
         }
 
 
+    }
+    
+    /**
+     * recupera todos los vehiculos de un usuario
+     * @param idEstacion
+     * @return arreglo de vehiculos
+     */
+    public ArrayList<Comentario> comentariosEstacionById(int idEstacion){
+        ArrayList<Comentario> comentarios = new ArrayList<>();
+        Comentario comentario = new Comentario();   
+        
+        
+        try {
+            ResultSet rS = MostrarTabla();
+            while(rS.next()){
+                if(rS.getInt("id_Estacion") == idEstacion){
+                    
+                    comentario.setCalificacion(rS.getInt("Calificacion"));
+                    comentario.setIdUsuario(rS.getInt("id_Usuario"));
+                    comentario.setIdComentario(rS.getInt("id_Comentario"));
+                    comentario.setMensaje("Comentario");
+                    
+                    comentarios.add(comentario);
+                    
+                    
+                    
+                    
+                }
+            }
+            System.out.println("se pudo encontrar comentarios sin problema");
+        } catch (SQLException ex) {
+            
+            System.out.println("error al encontrar comentarios");
+            System.out.println("Error encontrar comentarios: "+ex);
+
+        }
+        
+        return comentarios;
     }
     
 }

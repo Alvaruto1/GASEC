@@ -19,6 +19,7 @@
                 <div class="contPanel">
                     <div class="contTitulo">
                         <h1 class="titulo">Estacion + 1</h1>
+                        <input type="hidden" id="idEstacion" value="1">
                     </div>
                     
 

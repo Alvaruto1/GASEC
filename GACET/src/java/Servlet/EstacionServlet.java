@@ -33,8 +33,7 @@ public class EstacionServlet extends HttpServlet {
             comentario.setIdUsuario(id);
             comentario.setCalificacion(Integer.parseInt(request.getParameter("calificacion")));
             comentario.setMensaje(request.getParameter("comentario"));
-            datosComentarios.IngresarComentario(comentario, id);        
-            
+            datosComentarios.IngresarComentario(comentario, Integer.parseInt(request.getParameter("idEstacion")));                      
         }
         
         
@@ -48,12 +47,15 @@ public class EstacionServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EstacionServlet</title>");            
+            out.println("<title>Comentario</title>");   
+            //tiempo de demorar en la pagina
+            out.println("<meta http-equiv=\"Refresh\" content=\"2;url="+"Prueba.jsp"+"\">");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EstacionServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>"+"su comentario se ha realizado correctamente"+"</h1>");
             out.println("</body>");
-            out.println("</html>");
+            out.println("</html>");          
+            
         }
     }
 

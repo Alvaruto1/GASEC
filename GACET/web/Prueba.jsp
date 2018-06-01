@@ -4,6 +4,11 @@
     Author     : Sebas
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="Logica.Comentario.Comentario"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="baseDeDatos.DatosComentarios"%>
 <%@page import="javax.management.relation.RelationNotFoundException"%>
 <%@page import="baseDeDatos.DatosEstacion"%>
 <%@page import="java.sql.ResultSet"%>
@@ -47,18 +52,18 @@
           <%   
              
               
-              int id;
+              int idEstacion;
               DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "root"); 
               DatosEstacion datosEstacion = new DatosEstacion("gacet", "root", "root");
-              ResultSet rS = datosUbicacion.MostrarTabla();
+              ResultSet rSUbicacion = datosUbicacion.MostrarTabla();
               
               
-              while(rS.next()){
+              while(rSUbicacion.next()){
                   
                   
-              id= rS.getInt("id_Ubicacion");
+              idEstacion= rSUbicacion.getInt("id_Ubicacion");
               
-              ResultSet datos = datosEstacion.sacarEstacion(id);
+              ResultSet rSEstaciones = datosEstacion.sacarEstacion(idEstacion);
               
               
               
@@ -66,22 +71,94 @@
       
           
           <div
-          data-id="<%= rS.getInt("id_Ubicacion")%>"
-          data-lat="<%= rS.getDouble("Latitud")%>"
-          data-lng="<%= rS.getDouble("Longitud")%>"
+          data-id="<%= rSUbicacion.getInt("id_Ubicacion")%>"
+          data-lat="<%= rSUbicacion.getDouble("Latitud")%>"
+          data-lng="<%= rSUbicacion.getDouble("Longitud")%>"
           class="marker">
           <div class="map-card">
-          <p>Address: <%= rS.getString("Direccion")%></p>
+          <p>Address: <%= rSUbicacion.getString("Direccion")%></p>
           
           <% 
-           while(datos.next()){
+           while(rSEstaciones.next()){
           
           %>
-            <p> Marca:<%= datos.getString("Marca")%> </p>
-            <p> Puestos:<%= datos.getInt("Puestos")%></p>
-            <p> Valoracion:<%= datos.getInt("Valoracion")%></p>
+            
+<!----------------------------------------COmentario------------------------------------------------------>            
+            <div class="contPrincipal">          
+                                    
+            <form action="EstacionServlet" method="post">
+                <div class="contPanel">
+                    <div class="contTitulo">
+                        <h1 class="titulo">Estacion <%=idEstacion%></h1>
+                        <input type="hidden" id="idEstacion" value="<%=idEstacion%>">
+                    </div>
+                    
 
+                    <div class="contForm">
+                        <p> Marca:<%= rSEstaciones.getString("Marca")%> </p>
+                        <p> Puestos:<%= rSEstaciones.getInt("Puestos")%></p>
+                        <p> Valoracion:<%= rSEstaciones.getInt("Valoracion")%></p>
+                        <div class="fila">
+                            <div>Calificacion:</div>
+                            <div>
+                                <input type="radio" name="calificacion" id="calificacion" value="1">1
+                                <input type="radio" name="calificacion" id="calificacion" value="2">2
+                                <input type="radio" name="calificacion" id="calificacion" value="3">3
+                                <input type="radio" name="calificacion" id="calificacion" value="4">4
+                                <input type="radio" name="calificacion" id="calificacion" value="5">5
+                            </div>    
+                        </div>
+                    </div>
+                    <div class="contTitulo">
+                        <h1 class="titulo">Comentarios</h1>
+                    </div>
+                    <div class="contComentarios">
+                        <%  ArrayList<Comentario> comentarios;
+                            DatosComentarios datosComentarios = new DatosComentarios("gacet", "root", "root");
+                            comentarios = datosComentarios.comentariosEstacionById(idEstacion);
+                        %>
+                        
+                        <%
+                            for(Comentario c: comentarios){
+                                
+                            
+                        %>
+                        
+                        <div class="comentario">
+                            <div>Usuario:</div>
+                            <div class="usuario">Nombre Usuario</div>
+                            <div>Fecha:</div>
+                            <%
+                                Date fecha = c.getFecha().getTime();
+                                SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+                            %>
+                            <div class="fecha"><%= formato.format(fecha) %></div>
+                            <div>Comentario:</div>
+                            <div class="comentario"><%= c.getMensaje() %></div>
+                            <div>Calificacion:</div>
+                            <div class="calificacion"> <%= c.getCalificacion() %></div>
+                        </div>
+                            
+                        <%}%>
+
+
+                    </div>
+
+                    <div class="agregarComentario">
+                        <div class="titulo">Comentario</div>
+                        <div>
+
+                                <textarea id="comentario" name="comentario" required></textarea>
+                                <input type="submit" id="enviar" name="enviar" value="Enviar">
+
+                        </div>
+                    </div>
+                </div>
+            </form>                            
+        </div>
+<!--------------------------------------------------------------------------------------------------------------->
             </div>
+            
             </div>
           <%
               }
@@ -93,14 +170,14 @@
       </div>
 
     </form>
-
+          <a href="gacet.jsp">Regresar</a>
     <script>
       $(document).ready(function () {
       $('.gmaps').gmaps();
       });
     </script>
     
-    <a href="gacet.jsp">Regresar</a>
+    
     
     <script src="js/DatosMapa.js"></script>
 

@@ -3,6 +3,11 @@ package org.apache.jsp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import Logica.Comentario.Comentario;
+import java.util.ArrayList;
+import baseDeDatos.DatosComentarios;
 import javax.management.relation.RelationNotFoundException;
 import baseDeDatos.DatosEstacion;
 import java.sql.ResultSet;
@@ -52,6 +57,11 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("\r\n");
       out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
       out.write("<!DOCTYPE html>\r\n");
       out.write("<html lang=\"es\">\r\n");
       out.write("<head>\r\n");
@@ -61,7 +71,13 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("  <link href=\"css/jquery.gmaps.css\" rel=\"stylesheet\" />\r\n");
       out.write("  <script src=\"js/jquery.gmaps.js\"></script>\r\n");
       out.write("  \r\n");
-      out.write("  \r\n");
+      out.write("  <style>\r\n");
+      out.write("       \r\n");
+      out.write("      .gmaps {\r\n");
+      out.write("      height:500px;\r\n");
+      out.write("      width: 100%;\r\n");
+      out.write("      }\r\n");
+      out.write("      </style>\r\n");
       out.write("  \r\n");
       out.write("\r\n");
       out.write("</head>\r\n");
@@ -76,60 +92,157 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("      data-control-scale=\"true\"\r\n");
       out.write("      data-control-streetview=\"true\"\r\n");
       out.write("      data-control-rotate=\"true\"\r\n");
-      out.write("      data-event-mousewheel=\"true\" \r\n");
+      out.write("      data-event-mousewheel=\"true\"\r\n");
+      out.write(" \r\n");
       out.write("      data-zoom=\"20\" role=\"map\" class=\"gmaps\">\r\n");
+      out.write("\r\n");
+      out.write("          \r\n");
       out.write("          ");
- 
-              int id;
-              DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", ""); 
-              DatosEstacion datosEstacion = new DatosEstacion("gacet", "root", "");
-              ResultSet rS = datosUbicacion.MostrarTabla();
+   
+             
               
-              double lat= Double.parseDouble(request.getSession().getAttribute("Latitud").toString());
-              double lon= Double.parseDouble(request.getSession().getAttribute("Longitud").toString());
+              int idEstacion;
+              DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "root"); 
+              DatosEstacion datosEstacion = new DatosEstacion("gacet", "root", "root");
+              ResultSet rSUbicacion = datosUbicacion.MostrarTabla();
               
-              while(rS.next()){
+              
+              while(rSUbicacion.next()){
                   
-              id= rS.getInt("id_Ubicacion");
+                  
+              idEstacion= rSUbicacion.getInt("id_Ubicacion");
               
-              ResultSet datos = datosEstacion.sacarEstacion(id);
+              ResultSet rSEstaciones = datosEstacion.sacarEstacion(idEstacion);
+              
+              
+              
           
       out.write("\r\n");
       out.write("      \r\n");
       out.write("          \r\n");
       out.write("          <div\r\n");
       out.write("          data-id=\"");
-      out.print( rS.getInt("id_Ubicacion"));
+      out.print( rSUbicacion.getInt("id_Ubicacion"));
       out.write("\"\r\n");
       out.write("          data-lat=\"");
-      out.print( rS.getDouble("Latitud"));
+      out.print( rSUbicacion.getDouble("Latitud"));
       out.write("\"\r\n");
       out.write("          data-lng=\"");
-      out.print( rS.getDouble("Longitud"));
+      out.print( rSUbicacion.getDouble("Longitud"));
       out.write("\"\r\n");
       out.write("          class=\"marker\">\r\n");
       out.write("          <div class=\"map-card\">\r\n");
       out.write("          <p>Address: ");
-      out.print( rS.getString("Direccion"));
+      out.print( rSUbicacion.getString("Direccion"));
       out.write("</p>\r\n");
       out.write("          \r\n");
       out.write("          ");
  
-           while(datos.next()){
+           while(rSEstaciones.next()){
           
           
       out.write("\r\n");
-      out.write("            <p> Marca:");
-      out.print( datos.getString("Marca"));
+      out.write("            \r\n");
+      out.write("<!----------------------------------------COmentario------------------------------------------------------>            \r\n");
+      out.write("            <div class=\"contPrincipal\">          \r\n");
+      out.write("                                    \r\n");
+      out.write("            <form action=\"EstacionServlet\" method=\"post\">\r\n");
+      out.write("                <div class=\"contPanel\">\r\n");
+      out.write("                    <div class=\"contTitulo\">\r\n");
+      out.write("                        <h1 class=\"titulo\">Estacion ");
+      out.print(idEstacion);
+      out.write("</h1>\r\n");
+      out.write("                        <input type=\"hidden\" id=\"idEstacion\" value=\"");
+      out.print(idEstacion);
+      out.write("\">\r\n");
+      out.write("                    </div>\r\n");
+      out.write("                    \r\n");
+      out.write("\r\n");
+      out.write("                    <div class=\"contForm\">\r\n");
+      out.write("                        <p> Marca:");
+      out.print( rSEstaciones.getString("Marca"));
       out.write(" </p>\r\n");
-      out.write("            <p> Puestos:");
-      out.print( datos.getInt("Puestos"));
+      out.write("                        <p> Puestos:");
+      out.print( rSEstaciones.getInt("Puestos"));
       out.write("</p>\r\n");
-      out.write("            <p> Valoracion:");
-      out.print( datos.getInt("Valoracion"));
+      out.write("                        <p> Valoracion:");
+      out.print( rSEstaciones.getInt("Valoracion"));
       out.write("</p>\r\n");
+      out.write("                        <div class=\"fila\">\r\n");
+      out.write("                            <div>Calificacion:</div>\r\n");
+      out.write("                            <div>\r\n");
+      out.write("                                <input type=\"radio\" name=\"calificacion\" id=\"calificacion\" value=\"1\">1\r\n");
+      out.write("                                <input type=\"radio\" name=\"calificacion\" id=\"calificacion\" value=\"2\">2\r\n");
+      out.write("                                <input type=\"radio\" name=\"calificacion\" id=\"calificacion\" value=\"3\">3\r\n");
+      out.write("                                <input type=\"radio\" name=\"calificacion\" id=\"calificacion\" value=\"4\">4\r\n");
+      out.write("                                <input type=\"radio\" name=\"calificacion\" id=\"calificacion\" value=\"5\">5\r\n");
+      out.write("                            </div>    \r\n");
+      out.write("                        </div>\r\n");
+      out.write("                    </div>\r\n");
+      out.write("                    <div class=\"contTitulo\">\r\n");
+      out.write("                        <h1 class=\"titulo\">Comentarios</h1>\r\n");
+      out.write("                    </div>\r\n");
+      out.write("                    <div class=\"contComentarios\">\r\n");
+      out.write("                        ");
+  ArrayList<Comentario> comentarios;
+                            DatosComentarios datosComentarios = new DatosComentarios("gacet", "root", "root");
+                            comentarios = datosComentarios.comentariosEstacionById(idEstacion);
+                        
       out.write("\r\n");
+      out.write("                        \r\n");
+      out.write("                        ");
+
+                            for(Comentario c: comentarios){
+                                
+                            
+                        
+      out.write("\r\n");
+      out.write("                        \r\n");
+      out.write("                        <div class=\"comentario\">\r\n");
+      out.write("                            <div>Usuario:</div>\r\n");
+      out.write("                            <div class=\"usuario\">Nombre Usuario</div>\r\n");
+      out.write("                            <div>Fecha:</div>\r\n");
+      out.write("                            ");
+
+                                Date fecha = c.getFecha().getTime();
+                                SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+                            
+      out.write("\r\n");
+      out.write("                            <div class=\"fecha\">");
+      out.print( formato.format(fecha) );
+      out.write("</div>\r\n");
+      out.write("                            <div>Comentario:</div>\r\n");
+      out.write("                            <div class=\"comentario\">");
+      out.print( c.getMensaje() );
+      out.write("</div>\r\n");
+      out.write("                            <div>Calificacion:</div>\r\n");
+      out.write("                            <div class=\"calificacion\"> ");
+      out.print( c.getCalificacion() );
+      out.write("</div>\r\n");
+      out.write("                        </div>\r\n");
+      out.write("                            \r\n");
+      out.write("                        ");
+}
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("                    </div>\r\n");
+      out.write("\r\n");
+      out.write("                    <div class=\"agregarComentario\">\r\n");
+      out.write("                        <div class=\"titulo\">Comentario</div>\r\n");
+      out.write("                        <div>\r\n");
+      out.write("\r\n");
+      out.write("                                <textarea id=\"comentario\" name=\"comentario\" required></textarea>\r\n");
+      out.write("                                <input type=\"submit\" id=\"enviar\" name=\"enviar\" value=\"Enviar\">\r\n");
+      out.write("\r\n");
+      out.write("                        </div>\r\n");
+      out.write("                    </div>\r\n");
+      out.write("                </div>\r\n");
+      out.write("            </form>                            \r\n");
+      out.write("        </div>\r\n");
+      out.write("<!--------------------------------------------------------------------------------------------------------------->\r\n");
       out.write("            </div>\r\n");
+      out.write("            \r\n");
       out.write("            </div>\r\n");
       out.write("          ");
 
@@ -143,7 +256,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("      </div>\r\n");
       out.write("\r\n");
       out.write("    </form>\r\n");
-      out.write("\r\n");
+      out.write("          <a href=\"gacet.jsp\">Regresar</a>\r\n");
       out.write("    <script>\r\n");
       out.write("      $(document).ready(function () {\r\n");
       out.write("      $('.gmaps').gmaps();\r\n");
@@ -152,7 +265,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    \r\n");
       out.write("    \r\n");
       out.write("    \r\n");
-      out.write("    <script src=\"js/Mapa.js\"></script>\r\n");
+      out.write("    <script src=\"js/DatosMapa.js\"></script>\r\n");
       out.write("\r\n");
       out.write("  </body>\r\n");
       out.write("</html>\r\n");
