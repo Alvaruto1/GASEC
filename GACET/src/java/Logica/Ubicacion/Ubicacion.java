@@ -54,7 +54,7 @@ public class Ubicacion {
      * colocar la latitud de la ubicacion
      * @param latitud 
      */
-    public void setLatitud(int latitud) {
+    public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
 
@@ -70,7 +70,7 @@ public class Ubicacion {
      * coloca la longitud de la ubicacion
      * @param longitud 
      */
-    public void setLongitud(int longitud) {
+    public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
 

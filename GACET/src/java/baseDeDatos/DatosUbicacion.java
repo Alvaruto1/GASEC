@@ -9,6 +9,8 @@ import Logica.Ubicacion.Ubicacion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -152,6 +154,30 @@ public class DatosUbicacion {
 
         return ubicacion;
     }
+    
+    public ResultSet MostrarTabla(){
+        ResultSet tabla = null;
+        try {
+            
+            
+            
+            PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id_Ubicacion, "
+                    + "Latitud, "
+                    + "Longitud, "
+                    + "Direccion "
+                    + "FROM ubicacion "
+                    + "ORDER BY id_Ubicacion");
+            
+            tabla = pstm.executeQuery();
+            System.out.println("Se muestra tabla ubicacion correctamente");
+            
+        } catch (SQLException ex) {
+            System.out.println("Error mostrar tabla ubicaciones: "+ex);
+        }
+        return tabla;
+    }
+    
+    
     
 
 }

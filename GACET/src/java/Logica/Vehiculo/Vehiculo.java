@@ -55,7 +55,7 @@ public abstract class Vehiculo {
     /**
      * kilometraje que ha recorrido desde ultimo cambio aceite del vehiculo
      */
-    private int kmRecorrido = 0;
+    private double kmRecorrido = 0;
 
     /**
      * consulta informacion del vehiculo
@@ -211,7 +211,7 @@ public abstract class Vehiculo {
      * obtener km recorrido despues del utimo cambio aceite del vehiculo
      * @return entero de los kms
      */
-    public int getKmRecorrido() {
+    public double getKmRecorrido() {
         return kmRecorrido;
     }
 
@@ -247,6 +247,16 @@ public abstract class Vehiculo {
         this.ubicacion = ubicacion;
     }
     
+    /**
+     * acumula los kilometros
+     * @param km 
+     */
+    public void acumularKm(double km){
+        this.kmRecorrido+=km;        
+    }
     
+    public void reiniciarKm(){
+        this.kmRecorrido =0;
+    }
 
 }

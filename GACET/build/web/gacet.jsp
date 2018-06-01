@@ -326,10 +326,38 @@
                   
 </div>
 <!--Mostrar mapa_________________________________________________________________________________________________-->                   
-<div id="mapa" name="mapa" class="ocultar">          
-                    
-       mapa           
+<div class="ubicacionSebastinaGay">
+    <h2>Latitud: </h2>
+    <div id="posX" name="posX">0.0</div>
+    <h2>Longitud: </h2>
+    <div id="posY" name="posY">0.0</div>
+    <h2>Distancia: </h2>
+    <div id="distancia" name="distancia">0.0</div>                   
 </div>
+<div id="mapa" name="mapa" class="ocultar">          
+    <div class="contPrincipal">         
+            
+           
+        <div id="mapa" name="mapa">
+            
+            <div>
+                <a href="Prueba.jps"></a>                
+            </div>
+
+        </div>
+        
+        
+        
+
+
+    </div>
+
+    <script id="script" name="script"></script>
+    <script type="text/javascript" src="js/mapa.js"></script>           
+</div>
+            
+<!--Mostrar mapa final_________________________________________________________________________________________________-->                   
+           
 
             <div class="col-xs">
                 <div class="menuContenido">
@@ -382,7 +410,7 @@
             <div class="col-xs">
                 <form action="GACETServlet">
                     <input type="hidden" value="2" id="caso" name="caso"> 
-                    <input type="submit" value="Iniciar" class="btnContenido">
+                    <input type="button" value="Iniciar" class="btnContenido" id="inicio">
                 </form>
             </div>
             <div class="col-xs-1">
@@ -391,18 +419,18 @@
             <div class="col-xs">
                 <form action="GACETServlet">
                     <input type="hidden" value="3" id="caso" name="caso"> 
-                    <input type="submit" value="Detenerse" class="btnContenido">
+                    <input type="button" value="Detenerse" class="btnContenido" id="detener">
                 </form>
             </div>
             <div class="col-xs-1">
                 
             </div>
-            <div class="col-xs" >
+<!--            <div class="col-xs" >
                 <form action="GACETServlet">
                     <input type="hidden" value="4" id="caso" name="caso"> 
-                    <input type="submit" value="Reiniciar" class="btnContenido">
+                    <input type="button" value="Reiniciar" class="btnContenido">
                 </form>
-            </div>
+            </div>-->
             <div class="col-xs-3">
                 
             </div>

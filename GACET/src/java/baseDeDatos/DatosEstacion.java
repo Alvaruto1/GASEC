@@ -92,4 +92,28 @@ public class DatosEstacion {
 
 
     }
+    
+        //Esta funcion permite sacar una estacion deoendiendo del id_Ubicacion
+    public ResultSet sacarEstacion(int id){
+        ResultSet rS = null;
+        try {
+            PreparedStatement pstm = c.getConexion().prepareStatement("SELECT id_Estacion, "
+                    + " Marca, "
+                    + " Puestos, "
+                    + " Valoracion, "
+                    + " id_Ubicacion "
+                    + " FROM estacion "
+                    + " WHERE id_Ubicacion = ? ");
+            pstm.setInt(1, id);
+
+            rS = pstm.executeQuery();
+            System.out.println("se encontro vehiculo correctamente");
+
+        } catch (SQLException ex) {
+            System.out.println("Error encontrar vehiculo por id");
+            System.out.println(ex+": error encontrar vehiculo");
+        }
+        return rS;
+        
+    }
 }
