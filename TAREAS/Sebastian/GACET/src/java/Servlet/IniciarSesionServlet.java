@@ -39,8 +39,8 @@ public class IniciarSesionServlet extends HttpServlet {
         
         String usuarioAlias = request.getParameter("usuario");
         String contrasenia = request.getParameter("contrasenia");
-        DatosUsuario datosUsuario = new DatosUsuario("gacet","root","root"); 
-        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet","root","root");
+        DatosUsuario datosUsuario = new DatosUsuario("gacet","root",""); 
+        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet","root","");
         ResultSet rS = datosUsuario.MostrarTabla();
         Vehiculo vehiculoActual=null;
         String mensaje="";

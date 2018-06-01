@@ -67,8 +67,8 @@
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="flexboxgrid.min.css">
-        <link rel="stylesheet" type="text/css" href="cssGacet.css">
+        <link rel="stylesheet" type="text/css" href="css/flexboxgrid.min.css">
+        <link rel="stylesheet" type="text/css" href="css/cssGacet.css">
         <link rel="stylesheet" href="css/gacetOcultar.css"/>
         <script src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/gacet.js"></script> 
@@ -134,7 +134,7 @@
 
             <div class="col-xs-1"></div>
 
-            <div class="col-xs-8">
+            <div class="col-xs-7">
 
             <div class="contenido"> 
                     
@@ -146,6 +146,9 @@
             <div class="contTitulo">
                 <h1 class="titulo">Configuracion vehiculo</h1>
             </div>
+         
+            <div class="">
+            <div> Elija el vehiculo que quiera usar : </div>
             
             <div class="listaVheiculos">
                 <select id="vehiculo" name="vehiculo">
@@ -431,7 +434,7 @@
 </div> 
 </div> 
 
-            <div class="col-xs-2">
+            <div class="col-xs-3">
                 <div class="menuContenido">
                     <div>
                     </br>
