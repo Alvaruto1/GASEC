@@ -48,12 +48,13 @@
              
               
               int id;
-              DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", ""); 
-              DatosEstacion datosEstacion = new DatosEstacion("gacet", "root", "");
+              DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "root"); 
+              DatosEstacion datosEstacion = new DatosEstacion("gacet", "root", "root");
               ResultSet rS = datosUbicacion.MostrarTabla();
               
               
               while(rS.next()){
+                  
                   
               id= rS.getInt("id_Ubicacion");
               

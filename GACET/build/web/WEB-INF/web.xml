@@ -44,6 +44,10 @@
         <servlet-name>MapaServlet</servlet-name>
         <servlet-class>Servlet.MapaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EstacionServlet</servlet-name>
+        <servlet-class>Servlet.EstacionServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>inicioSesionServlet</servlet-name>
         <url-pattern>/inicioSesionServlet</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>MapaServlet</servlet-name>
         <url-pattern>/MapaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EstacionServlet</servlet-name>
+        <url-pattern>/EstacionServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

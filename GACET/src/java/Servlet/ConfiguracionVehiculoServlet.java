@@ -35,7 +35,7 @@ public class ConfiguracionVehiculoServlet extends HttpServlet {
         int caso = Integer.parseInt(request.getParameter("opcion"));
         int idVehiculo = Integer.parseInt(request.getParameter("idVehiculo"));
         Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");
-        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet", "root", "");
+        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet", "root", "root");
         
         
         switch(caso){

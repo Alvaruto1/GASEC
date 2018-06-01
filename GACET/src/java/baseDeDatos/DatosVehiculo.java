@@ -146,9 +146,9 @@ public class DatosVehiculo {
         ArrayList<Vehiculo> vehiculos = new ArrayList<>();
         Vehiculo vehiculo;
         //conexiones tablas
-        DatosSoat datosSoat = new DatosSoat("gacet", "root", "");
-        DatosAceite datosAceite = new DatosAceite("gacet", "root", "");
-        DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "");
+        DatosSoat datosSoat = new DatosSoat("gacet", "root", "root");
+        DatosAceite datosAceite = new DatosAceite("gacet", "root", "root");
+        DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "root");
         
         try {
             ResultSet rS = MostrarTabla();

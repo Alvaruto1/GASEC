@@ -10,7 +10,10 @@ import java.util.*;
 public class Comentario {
 
     //Atributos
-
+    /**
+     * ide enlazado base de datos
+     */
+    private int idComentario;
     /**
      * identificador del usuario activo
      */
@@ -56,6 +59,16 @@ public class Comentario {
         this.fecha = new GregorianCalendar();
         
     }
+
+    public int getIdComentario() {
+        return idComentario;
+    }
+
+    public void setIdComentario(int idComentario) {
+        this.idComentario = idComentario;
+    }
+    
+    
     
     /**
      * obtención del identificador del usuaio

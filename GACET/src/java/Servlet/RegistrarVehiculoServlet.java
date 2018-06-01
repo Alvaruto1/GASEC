@@ -50,10 +50,10 @@ public class RegistrarVehiculoServlet extends HttpServlet {
         SOAT soat;
         Combustible combustible;
         Aceite aceite = new Aceite();
-        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet", "root", "");
+        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet", "root", "root");
         DatosSoat datosSoat = new DatosSoat("gacet", "root", "root");
-        DatosAceite datosAceite = new DatosAceite("gacet", "root", "");
-        DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "");
+        DatosAceite datosAceite = new DatosAceite("gacet", "root", "root");
+        DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "root");
         
         
         if(usuario!=null){

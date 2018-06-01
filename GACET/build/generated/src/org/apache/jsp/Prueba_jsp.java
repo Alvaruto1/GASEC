@@ -61,13 +61,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("  <link href=\"css/jquery.gmaps.css\" rel=\"stylesheet\" />\r\n");
       out.write("  <script src=\"js/jquery.gmaps.js\"></script>\r\n");
       out.write("  \r\n");
-      out.write("  <style>\r\n");
-      out.write("       \r\n");
-      out.write("      .gmaps {\r\n");
-      out.write("      height:500px;\r\n");
-      out.write("      width: 100%;\r\n");
-      out.write("      }\r\n");
-      out.write("      </style>\r\n");
+      out.write("  \r\n");
       out.write("  \r\n");
       out.write("\r\n");
       out.write("</head>\r\n");
@@ -82,29 +76,23 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("      data-control-scale=\"true\"\r\n");
       out.write("      data-control-streetview=\"true\"\r\n");
       out.write("      data-control-rotate=\"true\"\r\n");
-      out.write("      data-event-mousewheel=\"true\"\r\n");
-      out.write(" \r\n");
+      out.write("      data-event-mousewheel=\"true\" \r\n");
       out.write("      data-zoom=\"20\" role=\"map\" class=\"gmaps\">\r\n");
-      out.write("\r\n");
-      out.write("          \r\n");
       out.write("          ");
-   
-             
-              
+ 
               int id;
               DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", ""); 
               DatosEstacion datosEstacion = new DatosEstacion("gacet", "root", "");
               ResultSet rS = datosUbicacion.MostrarTabla();
               
+              double lat= Double.parseDouble(request.getSession().getAttribute("Latitud").toString());
+              double lon= Double.parseDouble(request.getSession().getAttribute("Longitud").toString());
               
               while(rS.next()){
                   
               id= rS.getInt("id_Ubicacion");
               
               ResultSet datos = datosEstacion.sacarEstacion(id);
-              
-              
-              
           
       out.write("\r\n");
       out.write("      \r\n");
@@ -164,7 +152,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    \r\n");
       out.write("    \r\n");
       out.write("    \r\n");
-      out.write("    <script src=\"js/DatosMapa.js\"></script>\r\n");
+      out.write("    <script src=\"js/Mapa.js\"></script>\r\n");
       out.write("\r\n");
       out.write("  </body>\r\n");
       out.write("</html>\r\n");
