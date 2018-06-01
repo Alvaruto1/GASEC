@@ -27,9 +27,9 @@ public class EstacionServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         int id;
         Comentario comentario = new Comentario();
-        DatosComentarios datosComentarios = new DatosComentarios("gacet", "root", "root");
+        DatosComentarios datosComentarios = new DatosComentarios("gacet", "root", "");
         if(request.getSession().getAttribute("id")!=null){
-            id = Integer.parseInt(request.getSession().getAttribute("usuario").toString());
+            id = Integer.parseInt(request.getSession().getAttribute("id").toString());
             comentario.setIdUsuario(id);
             comentario.setCalificacion(Integer.parseInt(request.getParameter("calificacion")));
             comentario.setMensaje(request.getParameter("comentario"));

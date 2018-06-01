@@ -32,7 +32,7 @@ public class ModificarCuentaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DatosUsuario datosUsuario = new DatosUsuario("gacet", "root", "root");
+        DatosUsuario datosUsuario = new DatosUsuario("gacet", "root", "");
         System.out.println(request.getSession().getAttribute("usuario"));
         Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");        
         usuario.setNombre(request.getParameter("nombre"));

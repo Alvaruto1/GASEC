@@ -40,7 +40,7 @@ public class RegistrarServlet extends HttpServlet {
         usuario.setEmail(request.getParameter("correo"));
         usuario.setContrasenia(request.getParameter("contrasenia"));    
         
-        DatosUsuario datosUsuario = new DatosUsuario("gacet", "root", "root");
+        DatosUsuario datosUsuario = new DatosUsuario("gacet", "root", "");
         
         datosUsuario.IngresarUsuario(usuario);
         request.getSession().setAttribute("nombre", usuario.getAlias());

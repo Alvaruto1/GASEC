@@ -47,12 +47,12 @@ public class DatosComentarios {
             insertar.setInt(4, co.getCalificacion());
             insertar.executeUpdate();
             
-            System.out.println("Conexion correcta");
+            System.out.println("Se ingresa corrctamente comentario");
             
             
         } catch (SQLException e) {
             
-            System.out.println("ERROR");
+            System.out.println("Erro al ingresar comentario "+e);
         }
         
         
@@ -108,18 +108,19 @@ public class DatosComentarios {
      */
     public ArrayList<Comentario> comentariosEstacionById(int idEstacion){
         ArrayList<Comentario> comentarios = new ArrayList<>();
-        Comentario comentario = new Comentario();   
+          
         
         
         try {
             ResultSet rS = MostrarTabla();
             while(rS.next()){
+                Comentario comentario = new Comentario(); 
                 if(rS.getInt("id_Estacion") == idEstacion){
                     
                     comentario.setCalificacion(rS.getInt("Calificacion"));
                     comentario.setIdUsuario(rS.getInt("id_Usuario"));
                     comentario.setIdComentario(rS.getInt("id_Comentario"));
-                    comentario.setMensaje("Comentario");
+                    comentario.setMensaje(rS.getString("Comentario"));
                     
                     comentarios.add(comentario);
                     

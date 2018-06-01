@@ -33,7 +33,7 @@ public class Comentario {
     /**
      * fecha del envío del comentario
      */
-    private GregorianCalendar fecha;
+    private Date fecha;
 
     //Métodos
     
@@ -41,6 +41,7 @@ public class Comentario {
      * Método constructor
      */
     public Comentario() {
+        this.fecha = new Date();
         
     }
     
@@ -56,8 +57,8 @@ public class Comentario {
         this.idUsuario = idUsuario;
         this.calificacion = calificacion;
         this.mensaje = mensaje;
-        this.fecha = new GregorianCalendar();
-        
+        this.fecha = new Date();
+                
     }
 
     public int getIdComentario() {
@@ -122,7 +123,7 @@ public class Comentario {
      * Obtener fecha actual
      * @return fecha actual
      */
-    public GregorianCalendar getFecha() {
+    public Date getFecha() {
         return fecha;
     }
     
