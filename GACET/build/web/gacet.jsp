@@ -11,6 +11,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="Logica.Vehiculo.Vehiculo"%>
 <%@page import="Logica.Usuario.Usuario"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -63,10 +64,11 @@
             System.out.println(vehiculoActual+"-"+estadoV);
             
         %>
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="css/flexboxgrid.min.css">
-        <link rel="stylesheet" type="text/css" href="css/cssGacet.css">
+        <link rel="stylesheet" type="text/css" href="flexboxgrid.min.css">
+        <link rel="stylesheet" type="text/css" href="cssGacet.css">
         <link rel="stylesheet" href="css/gacetOcultar.css"/>
         <script src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/gacet.js"></script> 
@@ -74,7 +76,7 @@
     </head>
     <body>
 
-        <div class="contPrincipal">
+
         <header class="logo-menu">
             <div class="container">
                 <div class="row middle-xs between-xs">
@@ -111,10 +113,13 @@
                                         
                                     </a>
                             <a href="modificarCuenta.jsp"> <%=usuario.getAlias()%> </a>
-                            <form action="GACETServlet" method="post">
-                                <input type="hidden" value="0" id="caso" name="caso">
-                                <input type="submit" value="Cerrar Sesion">
-                            </form>
+                            
+                            <a>
+                                <form action="GACETServlet" method="post">
+                                    <input type="hidden" value="0" id="caso" name="caso">
+                                    <input type="submit" value="Cerrar Sesion" class="quitar">
+                                </form>
+                            </a>
                         </nav>
                 </div>
             </div>
@@ -127,15 +132,11 @@
 
         <div class="row">
 
-            <div class="col-xs-1">
+            <div class="col-xs-1"></div>
 
-                <div class="contenid"></div>  
+            <div class="col-xs-8">
 
-            </div>
-
-            <div class="col-xs">
-
-                <div class="contenido"> 
+            <div class="contenido"> 
                     
  <!--Configuracion vehiculo_________________________________________________________________________________________________-->                   
 
@@ -180,18 +181,34 @@
                 <h2>Caracteristica: </h2> <h2 id="caracteristica"><%if(estado){out.println(vehiculos.get(0).getAceite().getCaracteristica());}%></h2>
             </div> 
             
-            <div>
-                <form action="ConfiguracionVehiculoServlet" method="post">
-                    <input type="hidden" value="0" name="opcion">
-                    <input type="hidden" value="0" name="idVehiculo" id="idVehiculo">
-                    <input type="submit" value="Agregar vehiculo">
-                </form>
-                <form action="ConfiguracionVehiculoServlet" method="post">
-                    <input type="hidden" value="1" name="opcion">
-                    <input type="hidden" value="0" name="idVehiculo" id="idVehiculo">
-                    <input type="submit" value="Editar vehiculo">
-                </form>                
-            </div>
+            <div class="row">
+
+                                <div class="col-xs-8"></div>    
+                                <div class="col-xs-1">
+
+
+                                    <form action="ConfiguracionVehiculoServlet" method="post">
+                                        <input type="hidden" value="0" name="opcion">
+                                        <input type="hidden" value="0" name="idVehiculo" id="idVehiculo">
+                                        <input type="submit" value="Agregar vehiculo">
+                                    </form>
+
+                                    
+                                </div>
+                                <div class="col-xs-1"></div>
+
+                                <div class="col-xs-1">
+
+
+                                    <form action="ConfiguracionVehiculoServlet" method="post">
+                                        <input type="hidden" value="1" name="opcion">
+                                        <input type="hidden" value="0" name="idVehiculo" id="idVehiculo">
+                                        <input type="submit" value="Editar vehiculo">
+                                    </form>  
+                                    
+                                    
+                                </div>
+                                </div>
             
         </div>
  </div>    
@@ -206,16 +223,27 @@
                 <div class="contPanel">
                     <div class="contTitulo">
                         <h1 class="titulo">CONSULTAS</h1>
-                    </div>      
+                    </div>
+                    
+                    
                     <div class="contForm"> 
-                        <label for="tipoVehiculo">Tipo Vehiculo:</label>                        
-                        <input type="text" disabled id="tipoVehiculo" name="tipoVehiculo" pattern="[0-9]{0-99999999}" placeholder="Escriba kilometro recorridos" 
+                        
+                        <div class="row">
+                        <div class="col-xs-1"></div>
+                        <label class="col-xs-3" for="tipoVehiculo">Tipo Vehiculo:</label>                        
+                        <input class="col-xs-1" type="text" disabled id="tipoVehiculo" name="tipoVehiculo" pattern="[0-9]{0-99999999}" placeholder="Escriba kilometro recorridos" 
                                value="<%
                                    if(estadoV){
                                        out.print(vehiculoActual.getTipo());
                                    }
                                %>">
-                        <label for="fecha">Fecha de SOAT:</label>
+                        </div>
+                        
+                        
+                        
+                        <div class="row">
+                        <div class="col-xs-1"></div>
+                        <label class="col-xs-3" for="fecha">Fecha de SOAT:</label>
                         <%
                             
                             Date fecha = null;
@@ -229,29 +257,59 @@
                             }
                             
                         %>
-                        <input type="date" disabled id="fecha" name="fecha" value="<%if(estadoV){out.print(formatoFecha.format(fecha));}%>">
-                        <label for="empresa">Empresa:</label>                        
-                        <input type="text" disabled id="empresa" name="empresa" pattern="[A-Z]{4-16}" placeholder="Escriba la empresa de SOAT" 
+                        <input class="col-xs-1" type="date" disabled id="fecha" name="fecha" value="<%if(estadoV){out.print(formatoFecha.format(fecha));}%>">
+                        </div>
+                        
+                        
+                        <div class="row">
+                                <div class="col-xs-1"></div>    
+
+                               <label class="col-xs-3" for="empresa">Empresa:</label>                        
+                               <input class="col-xs-1" type="text" disabled id="empresa" name="empresa" pattern="[A-Z]{4-16}" placeholder="Escriba la empresa de SOAT" 
                                value="<%if(estadoV){out.print(vehiculoActual.getSoat().getEmpresa());}%>">
-                        <label for="ciudad">Ciudad:</label>                        
-                        <datalist id="ciudades">
-                            <option value="Bogota">
-                            <option value="Cali">
-                            <option value="Barranquilla">
-                            <option value="Medellin">
-                            <option value="Ibague">
-                        </datalist>
-                        <input name="ciudad" disabled id="ciudad" list="ciudades" placeholder="Escoja la ciudad " 
-                               value="<%if(estadoV){out.print(vehiculoActual.getSoat().getCiudad());}%>">
-                        <label for="tipoServicio">Tipo servicio:</label>
-                        <select disabled id="tipoServicio" name="tipoServicio" value="<%if(estadoV){out.print(vehiculoActual.getSoat().getTipoDeServicio());}%>">
-                            <option value="1">Particular</option>
-                            <option value="0">Publico</option>
-                            <option value="2">Carga</option>
-                            <option value="3">Diplomatico</option>
-                        </select>
-                        <div>Dias faltantes:</div>
-                        <div>
+
+                       </div>
+                        
+                        
+                        
+                        <div class="row">
+                         <div class="col-xs-1"></div>    
+
+                        <label class="col-xs-3" for="ciudad">Ciudad:</label>                        
+                       <datalist id="ciudades">
+                        <option value="Bogota">
+                        <option value="Cali">
+                         <option value="Barranquilla">
+                          <option value="Medellin">
+                        <option value="Ibague">
+                     </datalist>
+                     <input class="col-xs-1" name="ciudad" disabled id="ciudad" list="ciudades" placeholder="Escoja la ciudad " 
+                                                   value="<%if(estadoV){out.print(vehiculoActual.getSoat().getCiudad());}%>">
+
+                        </div>
+                                                   
+                                                   
+                        
+                        
+                        
+                        <div class="row">
+                                            <div class="col-xs-1"></div>    
+
+                                            <label class="col-xs-3" for="tipoServicio">Tipo servicio:</label>
+                                            <select class="col-xs-1" disabled id="tipoServicio" name="tipoServicio" value="<%if(estadoV){out.print(vehiculoActual.getSoat().getTipoDeServicio());}%>">
+                                                <option value="1">Particular</option>
+                                                <option value="0">Publico</option>
+                                                <option value="2">Carga</option>
+                                                <option value="3">Diplomatico</option>
+                                            </select>
+
+                       </div>
+                            
+                            
+                        <div class="row">
+                        <div class="col-xs-1"></div>      
+                        <div class="col-xs-3">Dias faltantes:</div>
+                        <div class="col-xs-1">
                             <%
                             if(estado){
                                 Date fechaActual = new Date();
@@ -265,6 +323,9 @@
                             }
                             %>
                         </div>
+                        </div>
+                        
+                        
                     </div>    
                 </div>
                 
@@ -272,6 +333,8 @@
                     <div class="contTitulo">
                         <h1 class="titulo">Mantenimiento</h1>
                     </div>
+                    
+                    
                     <%
                         Date fechaM = null;
                         SimpleDateFormat formatoFechaM = null;
@@ -280,12 +343,23 @@
                             formatoFechaM = new SimpleDateFormat("yyyy-MM-dd");
                             }
                         %>
-                    <div class="contForm">
-                        <label for="fecha">Fecha ultimo mantenimiento:</label>
-                        <input disabled type="date" id="fecha" name="fecha" 
+                        
+                        <div class="contForm">
+                            
+                        <div class="row">   
+                            <div class="col-xs-1"></div>
+                        
+                            <label class="col-xs-3" for="fecha">Fecha ultimo mantenimiento:</label>
+                            <input class="col-xs-1" disabled type="date" id="fecha" name="fecha" 
                                value="<%if(estadoV){out.print(formatoFechaM.format(fechaM));}%>">
-                        <div>Dias faltantes:</div>
-                        <div><%
+                        
+                        </div>
+                               
+                        <div class="row">   
+                        <div class="col-xs-1"></div>
+                        
+                        <div class="col-xs-3">Dias faltantes:</div>
+                        <div class="col-xs-1"><%
                             if(estado){
                                 Date fechaActual = new Date();
                                 Date fechaMante = vehiculoActual.getFechaUltimoMantenimiento().getTime();
@@ -296,23 +370,34 @@
                                 long dias = 365-(((totalSegundos/1000)/60)/60)/24;
                                 out.print(dias);
                             }
-                            %></div>                                                
+                            %>
+                        </div>     
+                        
+                        </div>       
+                        
+                        
+                                                                     
                     </div>
                         
                 </div>
+                    
                 
                 <div class="contPanel">
                     <div class="contTitulo">
                         <h1 class="titulo">Aceite</h1>
                     </div>
                     <div class="contForm">
-                        <label for="kmRecorridos">Kilometros recorridos:</label>                        
-                        <input type="text" disabled id="empresa" name="empresa" pattern="[0-9]{0-99999999}" placeholder="Escriba kilometro recorridos" 
+                        
+                        <div class="row"> 
+                        <div class="col-xs-1"></div>    
+                        <label class="col-xs-3" for="kmRecorridos">Kilometros recorridos:</label>                        
+                        <input class="col-xs-1" type="text" disabled id="empresa" name="empresa" pattern="[0-9]{0-99999999}" placeholder="Escriba kilometro recorridos" 
                                value="<%
                                    if(estadoV){
                                        out.print(vehiculoActual.getKmRecorrido());
                                    }
                                %>">
+                        </div>
                         
                         
                     </div>
@@ -325,45 +410,41 @@
         </div>             
                   
 </div>
-<!--Mostrar mapa_________________________________________________________________________________________________-->                   
-<div class="ubicacionSebastinaGay">
-    <h2>Latitud: </h2>
-    <div id="posX" name="posX">0.0</div>
-    <h2>Longitud: </h2>
-    <div id="posY" name="posY">0.0</div>
-    <h2>Distancia: </h2>
-    <div id="distancia" name="distancia">0.0</div>                   
-</div>
+<!--Mostrar mapa_________________________________________________________________________________________________-->
+                  
 <div id="mapa" name="mapa" class="ocultar">          
     <div class="contPrincipal">         
-            
-           
-        <div id="mapa" name="mapa">
-            
+        <div id="mapa" name="mapa"> 
             <div>
-                <a href="Prueba.jps"></a>                
+                <a href="Prueba.jsp">Ir al mapa</a>                
             </div>
-
         </div>
-        
-        
-        
-
-
     </div>
-
     <script id="script" name="script"></script>
-    <script type="text/javascript" src="js/mapa.js"></script>           
+    <script type="text/javascript" src="js/mapa.js"></script>                     
+                 
 </div>
-            
 <!--Mostrar mapa final_________________________________________________________________________________________________-->                   
-           
 
-            <div class="col-xs">
+
+
+</div> 
+</div> 
+
+            <div class="col-xs-2">
                 <div class="menuContenido">
                     <div>
                     </br>
-                    <a href="#" id="mostrarMapa">Mostrar Ubicacion</a>
+
+                    <center>
+                        <a href="#" id="mostrarMapa" class="personalizar">Mostrar Ubicacion</a>
+
+                    </center>
+                    
+                    
+                    </br>   
+                    </br>   
+                    
                         
                     <div class="texto">Esta opcion permite ver la ubicacion actual y te muestra las estaciones que tengas dentro de tu radio</div>
                         
@@ -371,7 +452,12 @@
                     </br>
                     
                     <div>
-                        <a href="#" id="consultasBtn">Consultas</a>
+                        <center>
+                            
+                          <a href="#" id="consultasBtn" class="personalizar">Consultas</a>  
+                        </center>
+                        
+                    </br>       
                     </br>    
 
                     <div class="texto">Esta opcion muestra las fechas del SOAT, mantenimiento y el aceite</div>
@@ -379,15 +465,42 @@
                     </div>
                     </br>
                 </div>
-            </div>
-            <div class="col-xs-1">
+                <br>
+                <br>
+                <div class="ubicacion">
+                    <center>
+                    <div class="row">
+                          
+                        <h2>Latitud: </h2>
+                        <div id="posX" name="posX">0.0</div>
+                    </div>
+
+                    <div class="row">
+                       
+                        <h2>Longitud: </h2>
+                        <div id="posY" name="posY">0.0</div>  
+                    </div>
+
+                    <div class="row">
+                           
+                        <h2>Distancia: </h2>
+                        <div id="distancia" name="distancia">0.0</div>
+                    </div>
+                    
+
+
+                    
+
+
+                    </center>                   
+                </div> 
             </div>
 
         </div> 
-        </br>
-        </br>    
+        
+           
 
-        <hr color="#21618C" size=7>
+        <hr color="#21618C" size="10">
 
         <div class="row">
 
@@ -407,6 +520,8 @@
             <div class="col-xs-1">
                 
             </div> 
+
+
             <div class="col-xs">
                 <form action="GACETServlet">
                     <input type="hidden" value="2" id="caso" name="caso"> 
@@ -425,12 +540,8 @@
             <div class="col-xs-1">
                 
             </div>
-<!--            <div class="col-xs" >
-                <form action="GACETServlet">
-                    <input type="hidden" value="4" id="caso" name="caso"> 
-                    <input type="button" value="Reiniciar" class="btnContenido">
-                </form>
-            </div>-->
+
+            
             <div class="col-xs-3">
                 
             </div>
@@ -450,13 +561,15 @@
            
 
             </div>  
-        </div> 
+        </div>
+
+        
+
+
        </div>
             
     </div>
-        </div>
-        </div>
-            
-            
+    </div>
+                      
     </body>
 </html>
