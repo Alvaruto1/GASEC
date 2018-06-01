@@ -52,8 +52,6 @@
               DatosEstacion datosEstacion = new DatosEstacion("gacet", "root", "");
               ResultSet rS = datosUbicacion.MostrarTabla();
               
-              double lat= Double.parseDouble(request.getSession().getAttribute("Latitud").toString());
-              double lon= Double.parseDouble(request.getSession().getAttribute("Longitud").toString());
               
               while(rS.next()){
                   

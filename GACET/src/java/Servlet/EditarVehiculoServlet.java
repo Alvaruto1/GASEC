@@ -54,10 +54,10 @@ public class EditarVehiculoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         Usuario usuario = null;
-        DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "root");
-        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet", "root", "root"); 
-        DatosAceite datosAceite = new DatosAceite("gacet", "root", "root"); 
-        DatosSoat datosSoat = new DatosSoat("gacet", "root", "root");
+        DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "");
+        DatosVehiculo datosVehiculo = new DatosVehiculo("gacet", "root", ""); 
+        DatosAceite datosAceite = new DatosAceite("gacet", "root", ""); 
+        DatosSoat datosSoat = new DatosSoat("gacet", "root", "");
         Vehiculo vehiculo = null;
         SOAT soat = null;
         Aceite aceite = new Aceite();

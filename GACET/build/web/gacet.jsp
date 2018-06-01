@@ -341,7 +341,7 @@
         <div id="mapa" name="mapa">
             
             <div>
-                <a href="Prueba.jps"></a>                
+                <a href="Prueba.jsp">Ir al mapa</a>                
             </div>
 
         </div>

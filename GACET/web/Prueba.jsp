@@ -99,7 +99,7 @@
       });
     </script>
     
-    
+    <a href="gacet.jsp">Regresar</a>
     
     <script src="js/DatosMapa.js"></script>
 
