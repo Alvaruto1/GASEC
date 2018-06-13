@@ -3,6 +3,7 @@ package org.apache.jsp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import baseDeDatos.DatosUbicacionMapa;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import Logica.Comentario.Comentario;
@@ -62,6 +63,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("\r\n");
       out.write("\r\n");
+      out.write("\r\n");
       out.write("<!DOCTYPE html>\r\n");
       out.write("<html lang=\"es\">\r\n");
       out.write("<head>\r\n");
@@ -69,6 +71,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("  <script src=\"js/jquery.min.js\"></script>\r\n");
       out.write("  <script src=\"http://code.jquery.com/jquery-3.2.1.js\"></script>\r\n");
       out.write("  <link href=\"css/jquery.gmaps.css\" rel=\"stylesheet\" />\r\n");
+      out.write("  <link rel=\"stylesheet\" href=\"css/comentarios.css\"/>\r\n");
       out.write("  <script src=\"js/jquery.gmaps.js\"></script>\r\n");
       out.write("  \r\n");
       out.write("  <style>\r\n");
@@ -102,15 +105,15 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
              
               
               int idEstacion;
-              DatosUbicacion datosUbicacion = new DatosUbicacion("gacet", "root", "root"); 
-              DatosEstacion datosEstacion = new DatosEstacion("gacet", "root", "root");
+              DatosUbicacionMapa datosUbicacion = new DatosUbicacionMapa("gacet", "root", ""); 
+              DatosEstacion datosEstacion = new DatosEstacion("gacet", "root", "");
               ResultSet rSUbicacion = datosUbicacion.MostrarTabla();
               
               
               while(rSUbicacion.next()){
                   
                   
-              idEstacion= rSUbicacion.getInt("id_Ubicacion");
+              idEstacion= rSUbicacion.getInt("id_UbicacionMapa");
               
               ResultSet rSEstaciones = datosEstacion.sacarEstacion(idEstacion);
               
@@ -122,7 +125,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("          \r\n");
       out.write("          <div\r\n");
       out.write("          data-id=\"");
-      out.print( rSUbicacion.getInt("id_Ubicacion"));
+      out.print( rSUbicacion.getInt("id_UbicacionMapa"));
       out.write("\"\r\n");
       out.write("          data-lat=\"");
       out.print( rSUbicacion.getDouble("Latitud"));
@@ -152,7 +155,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                        <h1 class=\"titulo\">Estacion ");
       out.print(idEstacion);
       out.write("</h1>\r\n");
-      out.write("                        <input type=\"hidden\" id=\"idEstacion\" value=\"");
+      out.write("                        <input type=\"hidden\" id=\"idEstacion\" name=\"idEstacion\" value=\"");
       out.print(idEstacion);
       out.write("\">\r\n");
       out.write("                    </div>\r\n");
@@ -171,7 +174,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                        <div class=\"fila\">\r\n");
       out.write("                            <div>Calificacion:</div>\r\n");
       out.write("                            <div>\r\n");
-      out.write("                                <input type=\"radio\" name=\"calificacion\" id=\"calificacion\" value=\"1\">1\r\n");
+      out.write("                                <input type=\"radio\" name=\"calificacion\" id=\"calificacion\" value=\"1\" checked=\"checked\">1\r\n");
       out.write("                                <input type=\"radio\" name=\"calificacion\" id=\"calificacion\" value=\"2\">2\r\n");
       out.write("                                <input type=\"radio\" name=\"calificacion\" id=\"calificacion\" value=\"3\">3\r\n");
       out.write("                                <input type=\"radio\" name=\"calificacion\" id=\"calificacion\" value=\"4\">4\r\n");
@@ -185,7 +188,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                    <div class=\"contComentarios\">\r\n");
       out.write("                        ");
   ArrayList<Comentario> comentarios;
-                            DatosComentarios datosComentarios = new DatosComentarios("gacet", "root", "root");
+                            DatosComentarios datosComentarios = new DatosComentarios("gacet", "root", "");
                             comentarios = datosComentarios.comentariosEstacionById(idEstacion);
                         
       out.write("\r\n");
@@ -198,28 +201,27 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
                         
       out.write("\r\n");
       out.write("                        \r\n");
-      out.write("                        <div class=\"comentario\">\r\n");
-      out.write("                            <div>Usuario:</div>\r\n");
-      out.write("                            <div class=\"usuario\">Nombre Usuario</div>\r\n");
+      out.write("                       <div class=\"comentario\">\r\n");
+      out.write("                            <div>Id usuario: ");
+      out.print(c.getIdUsuario() );
+      out.write("</div>\r\n");
       out.write("                            <div>Fecha:</div>\r\n");
       out.write("                            ");
 
-                                Date fecha = c.getFecha().getTime();
+                                Date fecha = c.getFecha();
                                 SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
                             
       out.write("\r\n");
       out.write("                            <div class=\"fecha\">");
       out.print( formato.format(fecha) );
       out.write("</div>\r\n");
-      out.write("                            <div>Comentario:</div>\r\n");
-      out.write("                            <div class=\"comentario\">");
+      out.write("                            <div>Comentario: ");
       out.print( c.getMensaje() );
       out.write("</div>\r\n");
-      out.write("                            <div>Calificacion:</div>\r\n");
-      out.write("                            <div class=\"calificacion\"> ");
+      out.write("                            <div>Calificacion: ");
       out.print( c.getCalificacion() );
       out.write("</div>\r\n");
-      out.write("                        </div>\r\n");
+      out.write("                        </div> \r\n");
       out.write("                            \r\n");
       out.write("                        ");
 }
@@ -232,7 +234,7 @@ public final class Prueba_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                        <div class=\"titulo\">Comentario</div>\r\n");
       out.write("                        <div>\r\n");
       out.write("\r\n");
-      out.write("                                <textarea id=\"comentario\" name=\"comentario\" required></textarea>\r\n");
+      out.write("                            <input type=\"text\" id=\"comentario\" name=\"comentario\" required></textarea>\r\n");
       out.write("                                <input type=\"submit\" id=\"enviar\" name=\"enviar\" value=\"Enviar\">\r\n");
       out.write("\r\n");
       out.write("                        </div>\r\n");

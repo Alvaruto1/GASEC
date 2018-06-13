@@ -83,51 +83,24 @@ footer .logo {
 	font-size: 30px;
 	text-align: center;
 }
-.contPrincipal{
 
-	text-align: center;
-	align-content: center;
-	width: 75%;
-	margin: 1%;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display:flex;
-	flex-direction: column;
-	border: 7px solid #21618C;
-	-webkit-box-shadow: -8px 6px 6px 1px rgba(184,164,184,1);
-	-moz-box-shadow: -8px 6px 6px 1px rgba(184,164,184,1);
-	box-shadow: -8px 6px 6px 1px rgba(184,164,184,1);
-
-
-}
-body{
-
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display:flex;
-	flex-direction: column;
-	justify-content: center; 
-	align-items: center;
-	color:#21618C;
-}
-
-input[type = "submit"]{
+.btnContenido{
 	width: 90%;
-	padding: 10px;
     background: #21618C;
     color:white;
     margin: 12px;
     box-shadow: #bfbfc7 2px 2px 4px;
+    padding: 10px;
 
 }
 
 
-input[type = "submit"]:hover{
+.btnContenido:hover{
 
     background: #bfbfc7;
     color:black;
     cursor: pointer;
-    border:0;
+
 }
 a{
 	color:#21618C;
@@ -136,19 +109,101 @@ a{
 	font-size: 30px;
 	padding: 5px;
 	margin: 5px;
-	flex-wrap: wrap; 
+	
 
 }
 .contenido{
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display:flex;
-	flex-direction: column;
-	justify-content: center; 
-	align-items: center;
-	overflow: scroll;
-	padding: 5px;
+	padding: 40px;
+	border: 7px solid #21618C;
 }
+.menuContenido{
+
+	padding: 40px;
+	border: 7px solid #21618C;
+
+
+}
+.logo{
+	padding: 50px;
+}
+.personalizar{
+
+    text-decoration: none;
+    padding: 5px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #21618C;
+    border: 2px solid #21618C;
+    
+  }
+ .personalizar:hover{
+    color: #1883ba;
+    background-color: #ffffff;
+  }
+  .texto{
+
+  	border: 2px solid #21618C;
+  	padding: 20px;
+  }
+  .quitar{
+  	border: none;
+  	background: #21618C;
+  	color: #ffffff;
+  	font-size: 15px;
+  }
+  .ocultar{
+
+  	size:5px;
+  }
+  h2{
+  	font-size:17px;
+  	font-weight: normal;
+  
+
+  }
+  .ubicacion{
+
+  	padding: 40px;
+	border: 7px solid #21618C;
+
+  }
+  .v{
+  	font-size: 20px; 
+  	text-decoration: underline; 
+  }
+  .titulo{
+  	text-align: center;
+  	text-decoration: blink;
+  	font-size: 40px;
+  }
+  .titul{
+  	font-size: 20px; 
+  	text-decoration: underline; 
+  }
+  .boton{
+
+    width: 270%;
+    background: #21618C;
+    color:white;
+    margin: 12px;
+    box-shadow: #bfbfc7 2px 2px 4px;
+    padding: 10px;
+
+  }
+  .recorrido{
+  	border: 7px solid #21618C;
+
+  }
+  .imagen{
+      width: 30%;
+  }
+  
+
+
+
+
+
+
 
 
 

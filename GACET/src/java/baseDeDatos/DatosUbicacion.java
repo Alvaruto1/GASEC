@@ -76,9 +76,8 @@ public class DatosUbicacion {
         try {
             PreparedStatement insertar = c.getConexion().prepareStatement("update ubicacion set "
                     
-                    + "Precio = ?,"
-                    + "Longitud = ?,"
                     + "Latitud = ?,"
+                    + "Longitud  = ?,"
                     + "Direccion = ?"
                     + " where id_Ubicacion = ?");
             
@@ -86,6 +85,7 @@ public class DatosUbicacion {
             insertar.setDouble(2, u.getLongitud());
             insertar.setString(3, u.getDireccion());
             insertar.setInt(4, id);
+            
             insertar.executeUpdate();
             System.out.println("Se actualizo correctamente la ubicacion");
         } catch (SQLException e) {
